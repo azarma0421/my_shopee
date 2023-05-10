@@ -1,0 +1,14 @@
+.navbar-tall {
+    height: 80px;
+    background-color: black;
+}
+
+.navbar-short {
+    height: 30px;
+    background-color: #374049;
+}
+
+.navbar-container {
+    display: flex;
+    flex-direction: column;
+}
