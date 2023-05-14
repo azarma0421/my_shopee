@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,13 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/nav.css">
+<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
+    <link rel="stylesheet" th:href="@{/nav.css}" />
     <title>HOME</title>
 
 </head>
 <body>
 <div class="navbar-container">
-    <nav class="d-flex navbar navbar-expand-md  navbar-tall">
+    <nav class="d-flex navbar navbar-expand-md navbar-tall">
         <a class="navbar-brand" href="#">Shopee</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent1">
@@ -51,10 +52,6 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
-            <!--        <form class="form-inline my-2 my-lg-0">-->
-            <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-            <!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-            <!--        </form>-->
         </div>
     </nav>
 </div>
