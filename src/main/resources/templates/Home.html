@@ -15,31 +15,51 @@
 </head>
 
 <style>
- .header {
-      height: 100px;
+
+    .header {
+      height: 150px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       background-color: coral;
     }
-    .center-span {
-        grid-column: 1 / span 1;
+
+    .left-header{
         display: flex;
-        justify-content: center;
+        grid-column: 1 / span 1;
         align-items: center;
-        font-size: 24px;
-        font-weight: bold;
+        justify-content: center;
     }
-    .searchbar{
+
+    .center-header{
         grid-column: 2 / span 1;
-        margin: auto;
         display: flex;
         align-items: center;
     }
 
+    .right-header{
+        display: flex;
+        grid-column: 3 / span 1;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .right-header .a{
+
+    }
+
+    .center-span {
+        font-size: 45px;
+        font-weight: bold;
+    }
+    .searchbar{
+        margin: auto;
+        display: flex;
+    }
+
     .inputArea{
         border: 2px solid #515151;
-        width: 300px;
-        height: 36px;
+        width: 500px;
+        height: 54px;
         border-bottom-left-radius: 100px;
         border-top-left-radius: 100px;
         padding: 0px 10px;
@@ -48,14 +68,14 @@
         vertical-align: top;
         margin-right: -2px;
     }
+
     .inputArea:focus {
         outline: none;
     }
 
-
     .search-button {
         border: 2px solid #515151;
-        height: 36px;
+        height: 54px;
         width: 60px;
         justify-content: center;
         background: #515151;
@@ -65,34 +85,81 @@
         align-items: center;
         margin-left: 2px;
     }
+
+    .header-span {
+        border: none;
+        color: black;
+        background-color: transparent;
+    }
+    a,a:hover {
+        color: black;
+        text-decoration: none;
+        font-size: 1.2rem;
+    }
+
+    .header-svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+
+    .logo-image {
+        width: 120px;
+        height: 120px;
+    }
+
+
+
+
+
 </style>
 
 <body>
 <div class="header">
-    <span class="center-span">Smile</span>
-    <p class="searchbar">
-        <input class="inputArea" placeholder="Search...">
-        <!-- 在此放置搜尋欄相關的內容 -->
-        </input>
-        <button type="button" class="search-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+    <div class="left-header">
+        <img src="images/logo.png" class="logo-image">
+        <span class="center-span">Smile.</span>
+    </div>
+    <div class="center-header">
+        <p class="searchbar">
+            <input class="inputArea" placeholder="Search...">
+            <!-- 在此放置搜尋欄相關的內容 -->
+            </input>
+            <button type="button" class="search-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                </svg>
+            </button>
+        </p>
+    </div>
+    <div class="right-header">
+        <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person header-svg" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
             </svg>
-        </button>
-    </p>
-</div>
+            <span class="account">登入&nbsp;&nbsp;&nbsp;</span>
+        </a>
+        <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-check header-svg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+            </svg>
+            <span class="cart">購物車</span>
+        </a>
+    </div>
 
 
-<!--bootstrap5-->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
+    <!--bootstrap5-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
 </body>
 </html>
