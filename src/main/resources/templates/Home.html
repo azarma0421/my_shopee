@@ -1,395 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Comatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My E-commerce Website</title>
+    <title>myWebsite</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-    <style>
-    /* Global Styles */
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-/* Header Styles */
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #f5f5f5;
-}
-
-.logo img {
-  height: 50px;
-}
-
-.menu {
-  list-style: none;
-  display: flex;
-}
-
-.menu li {
-  margin-right: 20px;
-  display: inline-block;
-  position: relative;
-}
-
-.menu li a {
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: #333;
-  font-size: 20px;
-}
-
-.cart a {
-  text-decoration: none;
-  color: #333;
-}
-
-/* Hero Section Styles */
-
-.hero {
-  height: 180px;
-  background-color: #f9f9f9;
-  text-align: center;
-  padding: 20px;
-}
-
-.hero-content {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 18px;
-  color: #777;
-  margin-bottom: 30px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #333;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-/* Featured Products Section Styles */
-
-.featured-products {
-  height: 400px;
-  text-align: center;
-  padding: 40px;
-  margin-bottom: 40px;
-}
-
-.featured-products h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 20px;
-}
-
-.product-card {
-  background-color: #f9f9f9;
-  padding: 20px;
-  text-align: center;
-}
-
-.product-card img {
-  max-width: 30%;
-  height: auto;
-
-}
-
-.product-card h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.product-card p {
-  font-size: 16px;
-  color: #777;
-}
-
-
-/* Special Offers Section Styles */
-
-.special-offers {
-  text-align: center;
-  background-color: #f9f9f9;
-  padding: 40px;
-  margin-top: 30px;
-}
-
-.promo-banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.promo-content {
-  text-align: center;
-}
-
-.promo-content h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.promo-content p {
-  font-size: 18px;
-  color: #777;
-  margin-bottom: 10px;
-}
-
-/* Testimonials Section Styles */
-
-.testimonials {
-  text-align: center;
-  padding: 40px;
-}
-
-.testimonials h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
-}
-
-/* Footer Styles */
-
-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 40px;
-}
-
-.footer-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.footer-menu {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.footer-menu li {
-  margin-right: 20px;
-}
-
-.footer-menu li a {
-  text-decoration: none;
-  color: #fff;
-}
-
-.footer-contact {
-  text-align: right;
-}
-
-.footer-contact p {
-  margin: 0;
-}
-
-.newsletter h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.newsletter input[type="email"],
-.newsletter button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-}
-
-.newsletter input[type="email"] {
-  width: 250px;
-  margin-right: 10px;
-}
-
-.newsletter button {
-  background-color: #f9f9f9;
-  color: #333;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  padding: 10px;
-  white-space: nowrap;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-  display: inline-block;
-}
-
-.featured-products + .special-offers {
-  margin-top: 40px;
-}
-
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<!-- HTML Content Here -->
-
+<!--Header-->
 <header>
-    <div class="logo">
-        <img src="images/logo.png" alt="Company Logo">
-    </div>
-    <nav>
-        <ul class="menu">
-            <li><a href="#">首頁</a></li>
-            <li class="dropdown">
-                <a href="#">分類</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">上衣</a></li>
-                    <li><a href="#">褲子</a></li>
-                    <li><a href="#">包包</a></li>
-                </ul>
-            </li>
-            <li><a href="#">客服</a></li>
-            <li><a href="#">會員中心</a></li>
-        </ul>
-    </nav>
-    <div class="cart">
-        <a href="#"><i class="fas fa-shopping-cart"></i> Cart (0)</a>
+    <div class="nav container">
+        <a href="#" class="logo">Ecommerce</a>
+        <i class='bx bx-cart' id="cart-icon"></i>
     </div>
 </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Welcome to Our Store</h1>
-        <p>Discover amazing products for every occasion.</p>
-        <a href="#" class="btn">Shop Now</a>
+<!--Shop-->
+<section class="shop container">
+    <h2 class="section-title">Shop Products</h2>
+<!--    content-->
+    <div class="shop-content">
+        <!--Box1-->
+        <div class="product-box">
+            <img src="/images/ACC/ACC_001.jpg" alt="" class="product-img">
+            <h2 class="product-title">Silver bracelet</h2>
+            <span class="price">$490</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box2-->
+        <div class="product-box">
+            <img src="/images/PANTS/PANT_005.jpg" alt="" class="product-img">
+            <h2 class="product-title">Jeans-blue</h2>
+            <span class="price">$890</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box3-->
+        <div class="product-box">
+            <img src="/images/ACC/ACC_003.jpg" alt="" class="product-img">
+            <h2 class="product-title">Satchel bag</h2>
+            <span class="price">$790</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box4-->
+        <div class="product-box">
+            <img src="/images/ACC/ACC_004.jpg" alt="" class="product-img">
+            <h2 class="product-title">Belt</h2>
+            <span class="price">$690</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box5-->
+        <div class="product-box">
+            <img src="/images/ACC/ACC_005.jpg" alt="" class="product-img">
+            <h2 class="product-title">Sock</h2>
+            <span class="price">$90</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box6-->
+        <div class="product-box">
+            <img src="/images/PANTS/PANT_001.jpg" alt="" class="product-img">
+            <h2 class="product-title">Trousers-black</h2>
+            <span class="price">$790</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box7-->
+        <div class="product-box">
+            <img src="/images/PANTS/PANT_002.jpg" alt="" class="product-img">
+            <h2 class="product-title">Shorts</h2>
+            <span class="price">$590</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box8-->
+        <div class="product-box">
+            <img src="/images/PANTS/PANT_003.jpg" alt="" class="product-img">
+            <h2 class="product-title">Trousers-white</h2>
+            <span class="price">$790</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+        <!--Box9-->
+        <div class="product-box">
+            <img src="/images/PANTS/PANT_004.jpg" alt="" class="product-img">
+            <h2 class="product-title">Pants</h2>
+            <span class="price">$890</span>
+            <i class="bx bx-shopping-bag add-cart"></i>
+        </div>
+
     </div>
 </section>
-
-<section class="featured-products">
-    <h2>Featured Products</h2>
-    <div class="product-grid" id="featured-products-slider">
-        <div class="product-card">
-            <img src="images/ACC/ACC_001.jpg" alt="Product 1">
-            <h3>Product 1</h3>
-            <p>Description of Product 1</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_002.jpg" alt="Product 2">
-            <h3>Product 2</h3>
-            <p>Description of Product 2</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_003.jpg" alt="Product 2">
-            <h3>Product 3</h3>
-            <p>Description of Product 3</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_004.jpg" alt="Product 2">
-            <h3>Product 4</h3>
-            <p>Description of Product 4</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_005.jpg" alt="Product 2">
-            <h3>Product 5</h3>
-            <p>Description of Product 5</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_002.jpg" alt="Product 2">
-            <h3>Product 2</h3>
-            <p>Description of Product 2</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_003.jpg" alt="Product 2">
-            <h3>Product 3</h3>
-            <p>Description of Product 3</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_004.jpg" alt="Product 2">
-            <h3>Product 4</h3>
-            <p>Description of Product 4</p>
-        </div>
-        <div class="product-card">
-            <img src="images/ACC/ACC_005.jpg" alt="Product 2">
-            <h3>Product 5</h3>
-            <p>Description of Product 5</p>
-        </div>
-        <!-- Add more product cards as needed -->
-    </div>
-</section>
-
-<section class="special-offers">
-    <div class="promo-banner">
-        <img src="promo-banner.png" alt="Special Offers">
-        <div class="promo-content">
-            <h3>Special Offer</h3>
-            <p>Get 20% off on selected items.</p>
-            <a href="#" class="btn">Shop Now</a>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <div class="footer-content">
-        <ul class="footer-menu">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">FAQs</a></li>
-            <li><a href="#">Shipping & Returns</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-        </ul>
-        <div class="footer-contact">
-            <p>Contact us:</p>
-            <p>123 Main Street, City, State</p>
-            <p>Phone: 123-456-7890</p>
-            <p>Email: info@example.com</p>
-        </div>
-    </div>
-    <div class="newsletter">
-        <h3>Subscribe to Our Newsletter</h3>
-        <form>
-            <input type="email" placeholder="Enter your email">
-            <button type="submit">Subscribe</button>
-        </form>
-    </div>
-</footer>
-
-
-<script>
-    $(document).ready(function() {
-        $('#featured-products-slider').slick();
-    });
-
-</script>
 </body>
-</html>
