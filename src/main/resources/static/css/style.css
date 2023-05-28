@@ -1,14 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-*{
+* {
     font-family: 'Poppins', sans-serif;
-    margin:0;
-    padding:0;
-    scroll-padding-top:2rem;
+    margin: 0;
+    padding: 0;
+    scroll-padding-top: 2rem;
     scroll-behavior: smooth;
     box-sizing: border-box;
     list-style: none;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 :root {
@@ -17,25 +16,25 @@
     --bg-color: #fff;
 }
 
-img{
+img {
     width: 100%;
 }
 
-body{
+body {
     color: var(--text-color);
 }
 
-.container{
+.container {
     max-width: 1068px;
     margin: auto;
     width: 100%;
 }
 
-section{
+section {
     padding: 4rem 0 3rem;
 }
 
-header{
+header {
     position: fixed;
     top: 0;
     left: 0;
@@ -45,27 +44,28 @@ header{
     z-index: 100;
 }
 
-.nav{
+.nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 0;
 }
 
-.logo{
+.logo {
     font-size: 1.1rem;
     color: var(--text-color);
     font-weight: 400;
 }
 
-#cart-icon{
+#cart-icon {
     font-size: 1.8rem;
     cursor: pointer;
 }
 
+
 /* cart */
 
-.cart{
+.cart {
     position: fixed;
     top: 0;
     right: 0;
@@ -74,15 +74,20 @@ header{
     padding: 20px;
     background: var(--bg-color);
     box-shadow: -2px 0 4px hsl(0 4% 15% / 10%);
+    transition: 0.3s;
 }
 
-.cart-title{
+.cart.active {
+    right: 0;
+}
+
+.cart-title {
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.cart-box{
+.cart-box {
     display: grid;
     grid-template-columns: 32% 50% 18%;
     align-items: center;
@@ -90,28 +95,28 @@ header{
     margin-top: 1rem;
 }
 
-.cart-img{
+.cart-img {
     weight: 100px;
     height: 100px;
     object-fit: contain;
     padding: 10px;
 }
 
-.detail-box{
+.detail-box {
     display: grid;
     row-gap: 0.5rem;
 }
 
-.cart-product-title{
+.cart-product-title {
     font-size: 1rem;
     text-transform: uppercase;
 }
 
-.cart-price{
+.cart-price {
     font-size: 500;
 }
 
-.cart-quantity{
+.cart-quantity {
     border: 1px solid var(--text-color);
     outline-color: var(--main-color);
     width: 2.4rem;
@@ -119,29 +124,29 @@ header{
     font-size: 1rem;
 }
 
-.cart-remove{
+.cart-remove {
     font-size: 24px;
     color: var(--main-color);
     cursor: pointer
 }
 
-.total{
+.total {
     display: flex;
     justify-content: flex-end;
     margin-top: 1.5rem;
     border-top: 1px solid var(--text-color);
 }
 
-.total-title{
+.total-title {
     font-size: 1rem;
     font-weight: 600;
 }
 
-.total-price{
+.total-price {
     margin-left: 0.5rem;
 }
 
-.btn-buy{
+.btn-buy {
     display: flex;
     margin: 1.5rem auto 0 auto;
     padding: 12px 20px;
@@ -153,11 +158,11 @@ header{
     cursor: pointer;
 }
 
-.btn-buy:hover{
+.btn-buy:hover {
     background: var(--text-color);
 }
 
-#color-cart{
+#close-cart {
     position: absolute;
     top: 1rem;
     right: 0.8rem;
@@ -166,52 +171,54 @@ header{
     cursor: pointer;
 }
 
-.section-title{
+.section-title {
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
     margin-bottom: 1.5rem;
 }
 
-.shop{
+.shop {
     margin-top: 2rem;
 }
 
+
 /* Shop Content  */
-.shop-content{
+
+.shop-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,220px));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
     gap: 1.5rem;
 }
 
-.product-box{
+.product-box {
     position: relative;
 }
 
-.product-box:hover{
+.product-box:hover {
     padding: 10px;
     border: 1px solid var(--text-color);
     transition: 0.4s
 }
 
-.product-img{
+.product-img {
     width: 100%;
     height: auto;
     margin-bottom: 0.5rem;
 }
 
-.product-title{
+.product-title {
     font-size: 1.1rem;
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
 
-.price{
+.price {
     font-weight: 500;
 }
 
-.add-cart{
+.add-cart {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -221,6 +228,6 @@ header{
     cursor: pointer;
 }
 
-.add-cart:hover{
-    background: hsl(249,32%,17%);
+.add-cart:hover {
+    background: hsl(249, 32%, 17%);
 }
