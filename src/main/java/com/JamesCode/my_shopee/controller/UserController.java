@@ -2,6 +2,7 @@ package com.JamesCode.my_shopee.controller;
 
 import com.JamesCode.my_shopee.entity.User;
 import com.JamesCode.my_shopee.service.UserService;
+import com.JamesCode.my_shopee.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,14 @@ public class UserController {
 
     @GetMapping("/user")
     public List<User> findAll(){
-        return userService.findAll();
+        List<User> new1 = userService.findAll();
+        return new1;
+    }
+
+    @GetMapping("/users")
+    public List<UserServiceImpl.DulUser> findAlls(){
+//        return userService.getUsersWithCarts();
+        List<UserServiceImpl.DulUser> new1 = userService.getUsersWithCarts();
+        return new1;
     }
 }

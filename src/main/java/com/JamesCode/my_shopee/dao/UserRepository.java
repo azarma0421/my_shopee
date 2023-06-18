@@ -2,9 +2,16 @@ package com.JamesCode.my_shopee.dao;
 
 import com.JamesCode.my_shopee.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+import java.util.List;
 
-	// that's it ... no need to write any code LOL!
-	
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    @Query(value = "SELECT a.id id,b.id id1 FROM user a left join user b on a.id = b.id;", nativeQuery = true)
+    List<Object[]> getUsersWithCarts();
+
+    @Query(value = "SELECT * FROM user", nativeQuery = true)
+    List<User> findAll();
 }

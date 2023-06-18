@@ -5,8 +5,8 @@ import com.JamesCode.my_shopee.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,34 +19,76 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<DulUser> getUsersWithCarts() {
+
+        List<DulUser> dulUsers = new ArrayList<>();
+        List<Object[]> queryResult = userRepository.getUsersWithCarts();
+
+        for (Object[] result : queryResult) {
+            int id = (int) result[0];
+            int id1 = (int) result[1];
+
+            DulUser dulUser = new DulUser(id, id1);
+            dulUsers.add(dulUser);
+        }
+
+        return dulUsers;
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
+//    @Override
+//    public User findById(int theId) {
+//        Optional<User> result = userRepository.findById(theId);
+//
+//        User theUser = null;
+//
+//        if (result.isPresent()) {
+//            theUser = result.get();
+//        }
+//        else {
+//            // we didn't find the employee
+//            throw new RuntimeException("Did not find User id - " + theId);
+//        }
+//
+//        return theUser;
+//    }
 
-    @Override
-    public User findById(int theId) {
-        Optional<User> result = userRepository.findById(theId);
+//    @Override
+//    public void save(User theUser) {
+//        userRepository.save(theUser);
+//    }
+//
+//    @Override
+//    public void deleteById(int theId) {
+//        userRepository.deleteById(theId);
+//    }
 
-        User theUser = null;
-
-        if (result.isPresent()) {
-            theUser = result.get();
+    public class DulUser {
+        private int id;
+        private int id1;
+        public DulUser(int id, int id1) {
+            this.id = id;
+            this.id1 = id1;
         }
-        else {
-            // we didn't find the employee
-            throw new RuntimeException("Did not find User id - " + theId);
+        // Getters and setters
+
+        public int getId() {
+            return id;
         }
 
-        return theUser;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    @Override
-    public void save(User theUser) {
-        userRepository.save(theUser);
-    }
+        public int getId1() {
+            return id1;
+        }
 
-    @Override
-    public void deleteById(int theId) {
-        userRepository.deleteById(theId);
+        public void setId1(int id1) {
+            this.id1 = id1;
+        }
     }
 }
