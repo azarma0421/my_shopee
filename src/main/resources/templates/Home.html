@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Comatible" content="IE=edge">
@@ -53,70 +53,12 @@
     <h2 class="section-title">Shop Products</h2>
     <!--    content-->
     <div class="shop-content">
-        <!--Box1-->
-        <div class="product-box">
-            <img src="/images/ACC/ACC_001.jpg" alt="" class="product-img">
-            <h2 class="product-title">Silver bracelet</h2>
-            <span class="price">$490</span>
+        <div th:each="product : ${products}" class="product-box">
+            <img th:src="${product.src}" alt="" class="product-img">
+            <h2 th:text="${product.name}" class="product-title"></h2>
+            <span th:text="${product.cost}" class="price"></span>
             <i class="bx bx-shopping-bag add-cart"></i>
         </div>
-        <!--Box2-->
-        <div class="product-box">
-            <img src="/images/PANTS/PANT_005.jpg" alt="" class="product-img">
-            <h2 class="product-title">Jeans-blue</h2>
-            <span class="price">$890</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box3-->
-        <div class="product-box">
-            <img src="/images/ACC/ACC_003.jpg" alt="" class="product-img">
-            <h2 class="product-title">Satchel bag</h2>
-            <span class="price">$790</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box4-->
-        <div class="product-box">
-            <img src="/images/ACC/ACC_004.jpg" alt="" class="product-img">
-            <h2 class="product-title">Belt</h2>
-            <span class="price">$690</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box5-->
-        <div class="product-box">
-            <img src="/images/ACC/ACC_005.jpg" alt="" class="product-img">
-            <h2 class="product-title">Sock</h2>
-            <span class="price">$90</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box6-->
-        <div class="product-box">
-            <img src="/images/PANTS/PANT_001.jpg" alt="" class="product-img">
-            <h2 class="product-title">Trousers-black</h2>
-            <span class="price">$790</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box7-->
-        <div class="product-box">
-            <img src="/images/PANTS/PANT_002.jpg" alt="" class="product-img">
-            <h2 class="product-title">Shorts</h2>
-            <span class="price">$590</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box8-->
-        <div class="product-box">
-            <img src="/images/PANTS/PANT_003.jpg" alt="" class="product-img">
-            <h2 class="product-title">Trousers-white</h2>
-            <span class="price">$790</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-        <!--Box9-->
-        <div class="product-box">
-            <img src="/images/PANTS/PANT_004.jpg" alt="" class="product-img">
-            <h2 class="product-title">Pants</h2>
-            <span class="price">$890</span>
-            <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
-
     </div>
 </section>
 <!--JS-->
