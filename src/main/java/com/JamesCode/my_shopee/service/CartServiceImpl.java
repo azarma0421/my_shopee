@@ -2,14 +2,15 @@ package com.JamesCode.my_shopee.service;
 
 import com.JamesCode.my_shopee.dao.CartRepository;
 import com.JamesCode.my_shopee.entity.Cart;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CartServiceImpl implements CartService{
 
     private CartRepository CartRepository;
@@ -56,6 +57,7 @@ public class CartServiceImpl implements CartService{
             if (a.isEmpty()) {
                 System.out.println("The list is empty.");
                 addToCart(userId,pid,1);
+
             } else {
                 System.out.println("The list is not empty.");
                 addNumToCart(userId,pid);
@@ -70,11 +72,14 @@ public class CartServiceImpl implements CartService{
     @Override
     public void addToCart(int userId,int pid,int num) {
         CartRepository.addToCart(userId,pid,num);
+        log.info("Parameter - userId:{}, pid:{},num:{}",userId,pid,num);
     }
 
     @Override
     public void addNumToCart(int userId,int pid) {
         CartRepository.addNumToCart(userId,pid);
+        log.info("Parameter - userId:{}, pid:{}",userId,pid);
+
     }
 
     @Override
