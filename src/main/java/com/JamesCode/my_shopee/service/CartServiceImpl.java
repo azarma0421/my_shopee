@@ -20,12 +20,31 @@ public class CartServiceImpl implements CartService{
         CartRepository = theCartRepository;
     }
 
-    @Override
-    public List<Cart> getCart(int userId) {
-//        return CartRepository.getmyCart(userId,0);
-        return null;
-    }
+    // get cart by userId
+//    @Override
+//    public List<Cart> getCart(int userId) {
+//
+//        List<Cart> myCarts = new ArrayList<>();
+//        List<Object[]> queryResult = CartRepository.getmyCart(userId,0);
+//        for (Object[] result : queryResult) {
+//            int id          = (int) result[0];
+//            int UserId      = (int) result[1];
+//            int ProductId   = (int) result[2];
+//            int num         = (int) result[3];
+//
+//            Cart myCart = Cart.builder()
+//                    .id(id)
+//                    .productId(ProductId)
+//                    .userId(UserId)
+//                    .num(num)
+//                    .build();
+//            myCarts.add(myCart);
+//        }
+//
+//        return myCarts;
+//    }
 
+    // get cart by userId,pid
     @Override
     public List<Cart> getmyCart(int userId,int pid) {
 
@@ -49,6 +68,7 @@ public class CartServiceImpl implements CartService{
         return myCarts;
     }
 
+    //add cart by userId,pid
     @Override
     public void addCart(int userId,int pid) {
 
@@ -69,21 +89,24 @@ public class CartServiceImpl implements CartService{
         }
     }
 
+    // new product for cart
     @Override
     public void addToCart(int userId,int pid,int num) {
         CartRepository.addToCart(userId,pid,num);
         log.info("Parameter - userId:{}, pid:{},num:{}",userId,pid,num);
     }
 
+    // already excise in cart
     @Override
     public void addNumToCart(int userId,int pid) {
         CartRepository.addNumToCart(userId,pid);
-        log.info("Parameter - userId:{}, pid:{}",userId,pid);
-
+        log.info("[SQL] Parameter - userId:{}, pid:{}",userId,pid);
     }
 
-    @Override
-    public void delCart() {
 
+    @Override
+    public void delCart(int userId,int pid) {
+        CartRepository.delCart(userId,pid);
+        log.info("[SQL] Parameter - userId:{}, pid:{}",userId,pid);
     }
 }

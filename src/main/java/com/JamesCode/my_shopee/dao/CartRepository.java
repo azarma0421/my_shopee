@@ -44,6 +44,16 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
             "  c.id = m.id", nativeQuery = true)
     void addNumToCart(@Param("userId") int userId,
                    @Param("pid") int pid);
+
+    @Modifying
+    @Transactional
+    @Query(value="delete from " +
+            "  cart " +
+            "where " +
+            "  UserId = :userId " +
+            "  and ProductId = :pid ", nativeQuery = true)
+    void delCart(@Param("userId") int userId,
+                      @Param("pid") int pid);
 //    @Modifying
 //    @Query(value="INSERT INTO cart (ProductId, UserId, num)" +
 //            "  VALUES (5, 5, 5)")

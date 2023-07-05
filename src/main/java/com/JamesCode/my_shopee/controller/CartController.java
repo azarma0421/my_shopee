@@ -17,9 +17,21 @@ public class CartController {
         cartService=theCartService;
     }
 
+//    @GetMapping("/get")
+//    public String getCart(@RequestParam("userId") int userId){
+//        cartService.getCart(userId);
+//        return null;
+//    }
+
     @GetMapping("/add")
     public String addCart(@RequestParam("userId") int userId,@RequestParam("id") int id){
         cartService.addCart(userId,id);
+        return null;
+    }
+
+    @GetMapping("/del")
+    public String delCart(@RequestParam("userId") int userId,@RequestParam("id") int id){
+        cartService.delCart(userId,id);
         return null;
     }
 }
