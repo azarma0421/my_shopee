@@ -47,28 +47,72 @@ function ready() {
     }
 }
 
+// item add to  cart
 function addCartClicked(event) {
     var addButton = event.target;
     var productBox = addButton.parentElement;
-    var id = productBox.querySelector('.id').value;
+    var pid = productBox.querySelector('.id').value;
 
 //    test
     var userId = 1;
 
-    var url = '/add?id=' + encodeURIComponent(id)
+    var url = '/cart?pid=' + encodeURIComponent(pid)
     + '&userId=' + encodeURIComponent(userId);
 
     $.ajax({
         url: url,
         type: 'PUT',
         success: function(response) {
-          console.log(response);
+            refreshCart(userId);
           // Perform any further actions with the response data
         },
         error: function(xhr, status, error) {
             console.error(error);
         }
       });
+}
+
+// get cart item by userId
+function refreshCart(userId) {
+
+    var url = '/cartdetail?userId=' + encodeURIComponent(userId);
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            updateCart(response);
+          // Perform any further actions with the response data
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+      });
+}
+
+// refresh screen cart
+function updateCart(response) {
+    // Find the cart content element
+    var cartContent = $(".cart-content");
+
+    // Clear the current cart content
+    cartContent.empty();
+
+    console.log(response);
+    // Iterate over the items in the response and create new cart box elements
+    response.forEach(function(item) {
+        var cartBox = $("<div>").addClass("cart-box");
+        var img = $("<img>").attr("src", item.src).addClass("cart-img");
+        var detailBox = $("<div>").addClass("detail-box");
+        var title = $("<div>").addClass("cart-product-title").text(item.name);
+        var price = $("<div>").addClass("cart-price").text(item.cost);
+        var quantity = $("<input>").attr("type", "number").addClass("cart-quantity").val(item.num);
+        var removeIcon = $("<i>").addClass("bx bxs-trash-alt cart-remove");
+
+        detailBox.append(title, price, quantity);
+        cartBox.append(img, detailBox, removeIcon);
+        cartContent.append(cartBox);
+    });
 }
 
 //function addCartClicked(event) {
