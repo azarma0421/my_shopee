@@ -60,7 +60,7 @@ function addCartClicked(event) {
 
     $.ajax({
         url: url,
-        type: 'GET',
+        type: 'PUT',
         success: function(response) {
           console.log(response);
           // Perform any further actions with the response data

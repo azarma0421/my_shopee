@@ -1,11 +1,9 @@
 package com.JamesCode.my_shopee.controller;
 
 import com.JamesCode.my_shopee.entity.Product;
-import com.JamesCode.my_shopee.entity.User;
 import com.JamesCode.my_shopee.service.ProductService;
 import com.JamesCode.my_shopee.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

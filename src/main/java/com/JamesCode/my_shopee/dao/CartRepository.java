@@ -17,7 +17,8 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
             " * " +
             "FROM cart " +
             "WHERE Userid = :userId " +
-            "AND ProductId = :pid", nativeQuery = true)
+            "AND (:pid = 0 " +
+            " or ProductId = :pid)", nativeQuery = true)
     List<Object[]> getmyCart(@Param("userId") int userId,
                        @Param("pid") int pid);
 

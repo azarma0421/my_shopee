@@ -21,28 +21,28 @@ public class CartServiceImpl implements CartService{
     }
 
     // get cart by userId
-//    @Override
-//    public List<Cart> getCart(int userId) {
-//
-//        List<Cart> myCarts = new ArrayList<>();
-//        List<Object[]> queryResult = CartRepository.getmyCart(userId,0);
-//        for (Object[] result : queryResult) {
-//            int id          = (int) result[0];
-//            int UserId      = (int) result[1];
-//            int ProductId   = (int) result[2];
-//            int num         = (int) result[3];
-//
-//            Cart myCart = Cart.builder()
-//                    .id(id)
-//                    .productId(ProductId)
-//                    .userId(UserId)
-//                    .num(num)
-//                    .build();
-//            myCarts.add(myCart);
-//        }
-//
-//        return myCarts;
-//    }
+    @Override
+    public List<Cart> getCart(int userId,int pid) {
+
+        List<Cart> myCarts = new ArrayList<>();
+        List<Object[]> queryResult = CartRepository.getmyCart(userId,pid);
+        for (Object[] result : queryResult) {
+            int id          = (int) result[0];
+            int UserId      = (int) result[1];
+            int ProductId   = (int) result[2];
+            int num         = (int) result[3];
+
+            Cart myCart = Cart.builder()
+                    .id(id)
+                    .productId(ProductId)
+                    .userId(UserId)
+                    .num(num)
+                    .build();
+            myCarts.add(myCart);
+        }
+        log.info("[SQL] Parameter - userId:{}, pid:{}",userId,0);
+        return myCarts;
+    }
 
     // get cart by userId,pid
     @Override

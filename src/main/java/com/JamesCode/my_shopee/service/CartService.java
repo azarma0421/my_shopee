@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CartService {
 
-//    public List<Cart> getCart(int userId);
+    public List<Cart> getCart(int userId,int pid);
     public List<Cart> getmyCart(int userId,int pid);
 
     public void addCart(int userId,int pid);
