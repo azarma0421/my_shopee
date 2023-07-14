@@ -6,7 +6,6 @@ let closeCart = document.querySelector("#close-cart");
 // open cart
 cartIcon.onclick = () => {
         cart.classList.add("active");
-        console.log(1);
     }
     // close cart
 closeCart.onclick = () => {
@@ -20,6 +19,7 @@ if (document.readyState == 'loading') {
     ready();
 }
 
+// unused
 function refreshCache() {
     var url = window.location.href;
     var cacheBustedUrl = url + '?timestamp=' + new Date().getTime();
@@ -34,6 +34,7 @@ function ready() {
         button.addEventListener('click', removeCartItem);
     }
 
+// error
     var quantityInput = document.getElementsByClassName('cart-quantity');
     for (var i = 0 ; i < quantityInput.length ; i++){
         var input = quantityInput[i];
@@ -47,10 +48,33 @@ function ready() {
     }
 }
 
-// item add to  cart
+// add item to  cart
 function addCartClicked(event) {
     var addButton = event.target;
     var productBox = addButton.parentElement;
+    var pid = productBox.querySelector('.id').value;
+
+//    test
+    var userId = 1;
+
+    var url = '/cart?pid=' + encodeURIComponent(pid)
+    + '&userId=' + encodeURIComponent(userId);
+
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        success: function(response) {
+            refreshCart(userId);
+          // Perform any further actions with the response data
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+      });
+}
+
+// delete item from cart
+function delFromCart(event) {
     var pid = productBox.querySelector('.id').value;
 
 //    test
@@ -81,7 +105,7 @@ function refreshCart(userId) {
         url: url,
         type: 'GET',
         success: function(response) {
-            refreshCart(response);
+            buildCart(response);
           // Perform any further actions with the response data
         },
         error: function(xhr, status, error) {
@@ -91,12 +115,14 @@ function refreshCart(userId) {
 }
 
 // refresh screen cart
-function refreshCart(response) {
+function buildCart(response) {
     // Find the cart content element
     var cartContent = $(".cart-content");
+    var total = $(".total-price");
 
     // Clear the current cart content
     cartContent.empty();
+    total.empty();
 
     console.log(response);
     // Iterate over the items in the response and create new cart box elements
@@ -113,11 +139,14 @@ function refreshCart(response) {
         cartBox.append(img, detailBox, removeIcon);
         cartContent.append(cartBox);
     });
+
+    total.text(response[0].total);
 }
 
 function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.remove();
+    delFromCart();
     updatetotal();
 }
 

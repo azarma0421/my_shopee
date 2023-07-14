@@ -25,7 +25,10 @@ public class LoginController {
         List<Product> new1 = productService.getProducts();
         model.addAttribute("products", new1);
 
-        List<ProductServiceImpl.Cart_Detail> new2 = productService.getCart_Detail();
+        //test
+        int id =1;
+
+        List<ProductServiceImpl.Cart_Detail> new2 = productService.getCart_Detail(id);
         model.addAttribute("Cart", new2);
         return "Home";
     }

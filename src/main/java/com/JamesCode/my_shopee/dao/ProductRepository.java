@@ -18,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query(value="WITH mc" +
             " AS" +
             "  (" +
-            "             SELECT     u.id," +
+            "             SELECT     p.id," +
             "                        p.name," +
             "                        CASE" +
             "                                   WHEN p.onsale = 'Y' THEN p.cost * 0.9" +
@@ -32,7 +32,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "             ON         u.id = c.userid" +
             "             INNER JOIN product p" +
             "             ON         c.productid = p.id" +
-            "             WHERE      u.id = '1') , total" +
+            "             WHERE      u.id = :userId) , total" +
             " AS" +
             "  (" +
             "         SELECT floor(sum(cost*num)) total" +
@@ -48,7 +48,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "                           ON         u.id = c.userid" +
             "                           INNER JOIN product p" +
             "                           ON         c.productid = p.id" +
-            "                           WHERE      u.id = '1' ) m )" +
+            "                           WHERE      u.id = :userId ) m )" +
             "  SELECT    mc.id," +
             "            mc.name," +
             "            CONCAT('$', mc.cost) cost," +

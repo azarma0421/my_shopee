@@ -24,6 +24,7 @@
             <!--Content-->
             <div class="cart-content">
                 <div th:each="Cart : ${Cart}" class="cart-box">
+                    <input type="hidden" class="id" th:value="${Cart.id}" />
                     <img th:src="${Cart.src}" alt="" class="cart-img">
                     <div class="detail-box">
                         <div th:text="${Cart.name}" class="cart-product-title"></div>

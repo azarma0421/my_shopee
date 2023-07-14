@@ -4,11 +4,12 @@ import com.JamesCode.my_shopee.entity.Cart;
 import com.JamesCode.my_shopee.service.CartService;
 import com.JamesCode.my_shopee.service.ProductService;
 import com.JamesCode.my_shopee.service.ProductServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 public class CartController {
@@ -16,8 +17,11 @@ public class CartController {
     private CartService cartService;
     private ProductService productService;
 
+    private static final Logger logger = LogManager.getLogger(CartController.class);
+
+
     @Autowired
-    public CartController(CartService theCartService,ProductService theProductService){
+    public CartController(CartService theCartService, ProductService theProductService){
         cartService=theCartService;
         productService = theProductService;
     }
@@ -25,6 +29,7 @@ public class CartController {
     @GetMapping("/cart")
     public List<Cart> getCart(@RequestParam("userId") int userId,
                           @RequestParam(value = "pid",required = false) Integer pid){
+
         if (pid == null) {
             pid = 0;
         }
@@ -49,7 +54,7 @@ public class CartController {
 
     @GetMapping("/cartdetail")
     public List<ProductServiceImpl.Cart_Detail> refreshCart(@RequestParam("userId") int userId){
-        List<ProductServiceImpl.Cart_Detail> cartDetail = productService.getCart_Detail();
+        List<ProductServiceImpl.Cart_Detail> cartDetail = productService.getCart_Detail(userId);
         return cartDetail;
     }
 }

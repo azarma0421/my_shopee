@@ -8,5 +8,5 @@ import java.util.List;
 public interface ProductService {
     public List<Product> getProducts();
 
-    public List<ProductServiceImpl.Cart_Detail> getCart_Detail();
+    public List<ProductServiceImpl.Cart_Detail> getCart_Detail(int id);
 }

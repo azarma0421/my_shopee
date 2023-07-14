@@ -26,10 +26,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Cart_Detail> getCart_Detail() {
+    public List<Cart_Detail> getCart_Detail(int userId) {
 
         List<Cart_Detail> cart_Detail = new ArrayList<>();
-        List<Object[]> queryResult = productRepository.getCart_Detail(1);
+        List<Object[]> queryResult = productRepository.getCart_Detail(userId);
 
         BigDecimal decimalValue = null;
 
