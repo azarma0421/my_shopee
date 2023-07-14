@@ -75,6 +75,8 @@ function addCartClicked(event) {
 
 // delete item from cart
 function delFromCart(event) {
+    var delButton = event.target;
+    var productBox = delButton.parentElement;
     var pid = productBox.querySelector('.id').value;
 
 //    test
@@ -85,7 +87,7 @@ function delFromCart(event) {
 
     $.ajax({
         url: url,
-        type: 'PUT',
+        type: 'DELETE',
         success: function(response) {
             refreshCart(userId);
           // Perform any further actions with the response data
@@ -128,6 +130,7 @@ function buildCart(response) {
     // Iterate over the items in the response and create new cart box elements
     response.forEach(function(item) {
         var cartBox = $("<div>").addClass("cart-box");
+        var pid = $("<input>").attr("type", "hidden").addClass("id").val(item.id);
         var img = $("<img>").attr("src", item.src).addClass("cart-img");
         var detailBox = $("<div>").addClass("detail-box");
         var title = $("<div>").addClass("cart-product-title").text(item.name);
@@ -136,18 +139,18 @@ function buildCart(response) {
         var removeIcon = $("<i>").addClass("bx bxs-trash-alt cart-remove");
 
         detailBox.append(title, price, quantity);
-        cartBox.append(img, detailBox, removeIcon);
+        cartBox.append(pid,img, detailBox, removeIcon);
         cartContent.append(cartBox);
     });
-
+    ready();
     total.text(response[0].total);
 }
 
 function removeCartItem(event) {
     var buttonClicked = event.target;
-    buttonClicked.parentElement.remove();
-    delFromCart();
+    delFromCart(event);
     updatetotal();
+    buttonClicked.parentElement.remove();
 }
 
 function quantityChange(event){
