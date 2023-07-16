@@ -22,14 +22,17 @@ public class LoginController {
 
     @GetMapping("/")
     public String showhome(Model model){
-        List<Product> new1 = productService.getProducts();
-        model.addAttribute("products", new1);
+        List<Product> products = productService.getProducts();
+        model.addAttribute("products", products);
 
         //test
         int id =1;
 
-        List<ProductServiceImpl.Cart_Detail> new2 = productService.getCart_Detail(id);
-        model.addAttribute("Cart", new2);
+        List<ProductServiceImpl.Cart_Detail> cart = productService.getCart_Detail(id);
+        if(cart.size()==0){
+            cart=null;
+        }
+        model.addAttribute("Cart", cart);
         return "Home";
     }
 }

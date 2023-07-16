@@ -23,7 +23,7 @@
             <h2 class="cart-title">My Cart</h2>
             <!--Content-->
             <div class="cart-content">
-                <div th:each="Cart : ${Cart}" class="cart-box">
+                <div th:if="${Cart != null}" th:each="Cart : ${Cart}" class="cart-box">
                     <input type="hidden" class="id" th:value="${Cart.id}" />
                     <img th:src="${Cart.src}" alt="" class="cart-img">
                     <div class="detail-box">
@@ -33,17 +33,25 @@
                     </div>
                     <i class="bx bxs-trash-alt cart-remove"></i>
                 </div>
+                <div th:unless="${Cart != null}">
+                    No items in the cart.
+                </div>
             </div>
 
             <!--Total-->
-            <div class="total">
-                <div class="total-title">Total</div>
-                <div th:text="${Cart[0].total}" class="total-price"></div>
+            <div id="cart-footer">
+                <div th:if="${Cart != null}">
+                    <div class="total">
+                        <div class="total-title">Total</div>
+                        <div th:text="${Cart[0].total}" class="total-price"></div>
+                    </div>
+                    <!--Buy Button-->
+                    <button type="button" class="btn-buy">Buy Now</button>
+                    <!--            Cart Close-->
+                </div>
             </div>
-            <!--Buy Button-->
-            <button type="button" class="btn-buy">But Now</button>
-            <!--            Cart Close-->
             <i class="bx bx-x" id="close-cart"></i>
+
         </div>
     </div>
 </header>

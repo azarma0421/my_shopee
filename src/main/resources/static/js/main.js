@@ -120,13 +120,13 @@ function refreshCart(userId) {
 function buildCart(response) {
     // Find the cart content element
     var cartContent = $(".cart-content");
-    var total = $(".total-price");
+//    var total = $(".total-price");
+    var cart_footer = $("#cart-footer");
 
     // Clear the current cart content
     cartContent.empty();
-    total.empty();
+//    total.empty();
 
-    console.log(response);
     // Iterate over the items in the response and create new cart box elements
     response.forEach(function(item) {
         var cartBox = $("<div>").addClass("cart-box");
@@ -142,15 +142,35 @@ function buildCart(response) {
         cartBox.append(pid,img, detailBox, removeIcon);
         cartContent.append(cartBox);
     });
-    ready();
-    total.text(response[0].total);
+
+    cart_footer.empty();
+    if(response.length === 0 ){
+        console.log("response is empty");
+
+        var msg = $("<div>").text("No items in the cart.");
+        cartContent.append(msg);
+        cart_footer.empty();
+    }else{
+        console.log("response is not empty");
+        ready();
+
+        var total = $("<div>").addClass("total");
+        var total_title = $("<div>").addClass("total-title").text("Total");
+        var total_price = $("<div>").addClass("total-price").text("Total");
+        var Buy_Button = $("<button>").attr("type", "button").addClass("btn-buy").text("But Now");
+
+        total.append(total_title,total_price);
+        cart_footer.append(total,Buy_Button);
+        total.text(response[0].total);
+        $("#cart").append(cart_footer);
+    }
 }
 
 function removeCartItem(event) {
     var buttonClicked = event.target;
     delFromCart(event);
-    updatetotal();
     buttonClicked.parentElement.remove();
+    updatetotal();
 }
 
 function quantityChange(event){
@@ -170,6 +190,8 @@ function updatetotal(){
     var cartContent = document.getElementsByClassName('cart-content')[0];
     var cartBoxes = cartContent.getElementsByClassName('cart-box');
     var total = 0;
+
+    console.log("cartBoxes: ",cartBoxes.length);
     for (var i = 0; i < cartBoxes.length; i++) {
         var cartBox = cartBoxes[i];
         var priceElement = cartBox.getElementsByClassName('cart-price')[0];
@@ -177,7 +199,5 @@ function updatetotal(){
         var price = parseFloat(priceElement.innerText.replace("$",""));
         var quantity = quantityElement.value;
         total +=  (price * quantity);
-
-        document.getElementsByClassName('total-price')[0].innerText = "$" + total;
     }
 }
