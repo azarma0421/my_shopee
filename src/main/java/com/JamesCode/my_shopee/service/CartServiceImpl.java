@@ -75,17 +75,17 @@ public class CartServiceImpl implements CartService{
         List<Cart> a = getmyCart(userId,pid);
         try{
             if (a.isEmpty()) {
-                System.out.println("The list is empty.");
+                System.out.println("[INFO] The list is empty.");
                 addToCart(userId,pid,1);
 
             } else {
-                System.out.println("The list is not empty.");
+                System.out.println("[INFO] The list is not empty.");
                 addNumToCart(userId,pid);
             }
-            System.out.println("Already add to cart.");
+            System.out.println("[INFO] Already add to cart.");
         }catch (Exception e){
             System.out.println(e);
-            System.out.println("Fail to add to cart.");
+            System.out.println("[INFO] Fail to add to cart.");
         }
     }
 
@@ -93,7 +93,7 @@ public class CartServiceImpl implements CartService{
     @Override
     public void addToCart(int userId,int pid,int num) {
         CartRepository.addToCart(userId,pid,num);
-        log.info("Parameter - userId:{}, pid:{},num:{}",userId,pid,num);
+        log.info("[INFO] Parameter - userId:{}, pid:{},num:{}",userId,pid,num);
     }
 
     // already excise in cart

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<User> findAll();
+    public List<User> getUserProfile(String username);
 
     public List<UserServiceImpl.DulUser> getUsersWithCarts();
 //    public User findById(int theId);

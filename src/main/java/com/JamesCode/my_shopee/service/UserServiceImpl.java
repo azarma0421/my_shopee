@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<User> getUserProfile(String username) {
+        return userRepository.getinfoByname(username);
     }
 //    @Override
 //    public User findById(int theId) {
@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
 //        userRepository.deleteById(theId);
 //    }
 
+    //test
     public class DulUser {
         private int id;
         private int id1;

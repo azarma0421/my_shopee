@@ -17,7 +17,7 @@ public class CartController {
     private CartService cartService;
     private ProductService productService;
 
-    private static final Logger logger = LogManager.getLogger(CartController.class);
+    static final Logger logger = LogManager.getLogger(CartController.class);
 
 
     @Autowired

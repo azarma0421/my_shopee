@@ -22,12 +22,6 @@ public class UserController {
         userService = theUserService;
     }
 
-    @GetMapping("/user")
-    public List<User> findAll(){
-        List<User> new1 = userService.findAll();
-        return new1;
-    }
-
     @GetMapping("/users")
     public List<UserServiceImpl.DulUser> findAlls(){
 //        return userService.getUsersWithCarts();

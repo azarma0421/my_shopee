@@ -32,7 +32,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "             ON         u.id = c.userid" +
             "             INNER JOIN product p" +
             "             ON         c.productid = p.id" +
-            "             WHERE      u.id = :userId) , total" +
+            "             WHERE      u.id = :userId) , " +
+            "   total" +
             " AS" +
             "  (" +
             "         SELECT floor(sum(cost*num)) total" +
