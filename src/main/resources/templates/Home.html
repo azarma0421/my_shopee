@@ -17,7 +17,11 @@
 <header>
     <div class="nav container">
         <a href="#" class="logo">Ecommerce</a>
+        <form th:action="@{logout}" method="POST">
+            <input type="submit" value="Logout"/>
+        </form>
         <i class='bx bx-cart' id="cart-icon"></i>
+
         <!--cart-->
         <div class="cart">
             <h2 class="cart-title">My Cart</h2>

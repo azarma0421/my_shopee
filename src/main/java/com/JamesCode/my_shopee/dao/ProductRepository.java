@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "                        c.num," +
             "                        p.onsale," +
             "                        p.src" +
-            "             FROM       user u" +
+            "             FROM       user_info u" +
             "             INNER JOIN cart c" +
             "             ON         u.id = c.userid" +
             "             INNER JOIN product p" +
@@ -44,7 +44,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "                                                 ELSE p.cost" +
             "                                      end cost," +
             "                                      c.num" +
-            "                           FROM       user u" +
+            "                           FROM       user_info u" +
             "                           INNER JOIN cart c" +
             "                           ON         u.id = c.userid" +
             "                           INNER JOIN product p" +

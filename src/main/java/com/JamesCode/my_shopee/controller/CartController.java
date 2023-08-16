@@ -36,7 +36,6 @@ public class CartController {
         pid = pid.intValue();
         List<Cart> cartItem = cartService.getCart(userId,pid);
         System.out.println("cartItem: " + cartItem);
-//        cartService.getCart(userId);
         return cartItem;
     }
 

@@ -11,13 +11,13 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT a.id id,b.id id1 " +
-            "FROM user a " +
-            "left join user b " +
+            "FROM user_info a " +
+            "left join user_info b " +
             "on a.id = b.id;", nativeQuery = true)
     List<Object[]> getUsersWithCarts();
 
     @Query(value = "SELECT * " +
-            "FROM user " +
+            "FROM user_info " +
             "WHERE username = :username", nativeQuery = true)
     List<User> getinfoByname(@Param("username") String username);
 }
