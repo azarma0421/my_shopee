@@ -30,7 +30,7 @@ public class LoginController {
 
     @GetMapping("/LoginPage")
     public String showLoginPage(){
-        return "plain-login";
+        return "fancy-login";
     }
 
     @GetMapping("/")
