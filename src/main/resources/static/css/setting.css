@@ -1,0 +1,32 @@
+.nav.container {
+    background-color: #20c997;
+}
+
+.left-part {
+    flex: 1;
+}
+
+.middle-part {
+    flex: 1;
+    text-align: center;
+}
+
+.right-part {
+    flex: 1;
+    text-align: right;
+}
+
+header {
+  position: relative; /* Ensure the header can be positioned */
+  z-index: 1000; /* A higher value than custom-form */
+}
+
+.custom-form {
+  position: absolute; /* Position it relative to its closest positioned ancestor */
+  top: 100px; /* Adjust the top value as needed */
+  left: 0; /* Align it to the left side */
+  width: 100%; /* Make it span the entire width */
+  padding: 20px; /* Add padding for spacing */
+  box-sizing: border-box; /* Include padding in the width */
+  z-index: 900; /* Lower value than header */
+}
