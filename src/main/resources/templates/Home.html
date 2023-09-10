@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Comatible" content="IE=edge">
@@ -20,6 +22,10 @@
         <form th:action="@{logout}" method="POST">
             <input type="submit" value="Logout"/>
         </form>
+        <form sec:if="hasRole('ADMIN')" th:action="@{SettingPage}" method="POST">
+            <input type="submit" value="TO Setting"/>
+        </form>
+
         <i class='bx bx-cart' id="cart-icon"></i>
 
         <!--cart-->
