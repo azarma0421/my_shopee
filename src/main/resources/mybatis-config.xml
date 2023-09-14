@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        <!-- MyBatis的全局配置文件 -->
+<configuration >
+    <!-- 1.配置環境，可配置多個環境（比如：develop開發、test測試） -->
+    <environments default="develop">
+        <environment id="develop">
+
+        <!-- 1.1.配置事務管理方式：JDBC/MANAGED
+            JDBC：將事務交给JDBC管理（推薦）
+            MANAGED：自己管理事務
+        -->
+        <transactionManager type="JDBC"></transactionManager>
+
+        <!-- 1.2.配置數據來源，即連接池 JNDI/POOLED/UNPOOLED
+           JNDI：已過時
+           POOLED：使用連接池（推薦）
+           UNPOOLED：不使用連接池
+        -->
+        <dataSource type="POOLED">
+            <property name="driver" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://localhost:3306/ecommerce"/>
+            <property name="username" value="Ecommerce"/>
+            <property name="password" value="Ecommerce"/>
+        </dataSource>
+
+    </environment>
+    </environments>
+
+    <!-- 2.導入Mapper配置文件，如果mapper文件有多個，可以通過多個mapper標籤導入 -->
+    <mappers>
+        <mapper resource="mappers/EmpMapper.xml"/>
+    </mappers>
+</configuration>
