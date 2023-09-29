@@ -32,6 +32,9 @@ public class createDAOImpl implements CreateDAO {
         //4.連接對應sql語句
         List<Map<String, Object>> resultList = session.selectList(DAO,paramMap);
 
+        session.commit();
+        session.close();
+
         return resultList;
     }
 

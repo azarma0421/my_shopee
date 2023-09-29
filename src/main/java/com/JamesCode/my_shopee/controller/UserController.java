@@ -14,17 +14,17 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
-    private UserService userService;
+//    private UserService userService;
+//
+//    @Autowired
+//    public UserController(UserService theUserService){
+//        userService = theUserService;
+//    }
 
-    @Autowired
-    public UserController(UserService theUserService){
-        userService = theUserService;
-    }
-
-    @GetMapping("/users")
-    public List<UserServiceImpl.DulUser> findAlls(){
-//        return userService.getUsersWithCarts();
-        List<UserServiceImpl.DulUser> new1 = userService.getUsersWithCarts();
-        return new1;
-    }
+//    @GetMapping("/users")
+//    public List<UserServiceImpl.DulUser> findAlls(){
+////        return userService.getUsersWithCarts();
+//        List<UserServiceImpl.DulUser> new1 = userService.getUsersWithCarts();
+//        return new1;
+//    }
 }

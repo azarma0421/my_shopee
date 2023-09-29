@@ -1,13 +1,14 @@
 package com.JamesCode.my_shopee.service;
 
 import com.JamesCode.my_shopee.dao.CartRepository;
-import com.JamesCode.my_shopee.entity.Cart;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -15,98 +16,78 @@ public class CartServiceImpl implements CartService{
 
     private CartRepository CartRepository;
 
+    private CreateDAO createDAO;
     @Autowired
-    public CartServiceImpl(CartRepository theCartRepository){
+    public CartServiceImpl(CartRepository theCartRepository,CreateDAO theCreateDAO){
         CartRepository = theCartRepository;
+        createDAO = theCreateDAO;
     }
 
-    // get cart by userId
     @Override
-    public List<Cart> getCart(int userId,int pid) {
+    public List<Map<String, Object>> getCart(Map<String, Object> paraMap) throws IOException {
 
-        List<Cart> myCarts = new ArrayList<>();
-        List<Object[]> queryResult = CartRepository.getmyCart(userId,pid);
-        for (Object[] result : queryResult) {
-            int id          = (int) result[0];
-            int UserId      = (int) result[1];
-            int ProductId   = (int) result[2];
-            int num         = (int) result[3];
-
-            Cart myCart = Cart.builder()
-                    .id(id)
-                    .productId(ProductId)
-                    .userId(UserId)
-                    .num(num)
-                    .build();
-            myCarts.add(myCart);
-        }
-        log.info("[SQL] Parameter - userId:{}, pid:{}",userId,0);
-        return myCarts;
-    }
-
-    // get cart by userId,pid
-    @Override
-    public List<Cart> getmyCart(int userId,int pid) {
-
-        List<Cart> myCarts = new ArrayList<>();
-        List<Object[]> queryResult = CartRepository.getmyCart(userId,pid);
-        for (Object[] result : queryResult) {
-            int id          = (int) result[0];
-            int UserId      = (int) result[1];
-            int ProductId   = (int) result[2];
-            int num         = (int) result[3];
-
-            Cart myCart = Cart.builder()
-                    .id(id)
-                    .productId(ProductId)
-                    .userId(UserId)
-                    .num(num)
-                    .build();
-            myCarts.add(myCart);
-        }
-
-        return myCarts;
+        List<Map<String, Object>> result_list = new ArrayList<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("HomePageMapper.getCartByUid",paraMap);
+        return result_list;
     }
 
     //add cart by userId,pid
     @Override
-    public void addCart(int userId,int pid) {
+    public List<Map<String, Object>> addCart(Map<String, Object> paraMap) throws IOException {
 
-        List<Cart> a = getmyCart(userId,pid);
+        List<Map<String, Object>> result_list = new ArrayList<>();
+
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("HomePageMapper.getCartByUid",paraMap);
         try{
-            if (a.isEmpty()) {
+            if (result_list.isEmpty()) {
                 System.out.println("[INFO] The list is empty.");
-                addToCart(userId,pid,1);
+                paraMap.put("num","1");
+                addToCart(paraMap);
 
             } else {
                 System.out.println("[INFO] The list is not empty.");
-                addNumToCart(userId,pid);
+                addNumToCart(paraMap);
             }
             System.out.println("[INFO] Already add to cart.");
         }catch (Exception e){
             System.out.println(e);
             System.out.println("[INFO] Fail to add to cart.");
         }
+        return result_list;
     }
 
     // new product for cart
     @Override
-    public void addToCart(int userId,int pid,int num) {
-        CartRepository.addToCart(userId,pid,num);
-        log.info("[INFO] Parameter - userId:{}, pid:{},num:{}",userId,pid,num);
+    public List<Map<String, Object>> addToCart(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String, Object>> result_list = new ArrayList<>();
+
+        CreateDAO createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("HomePageMapper.addToCart",paraMap);
+        return null;
     }
 
     // already excise in cart
     @Override
-    public void addNumToCart(int userId,int pid) {
-        CartRepository.addNumToCart(userId,pid);
-        log.info("[SQL] Parameter - userId:{}, pid:{}",userId,pid);
+    public List<Map<String, Object>> addNumToCart(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String, Object>> result_list = new ArrayList<>();
+
+        CreateDAO createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("HomePageMapper.addNumToCart",paraMap);
+        return null;
     }
 
 
     @Override
-    public void delCart(int userId,int pid) {
-        CartRepository.delCart(userId,pid);
-        log.info("[SQL] Parameter - userId:{}, pid:{}",userId,pid);
+    public List<Map<String, Object>> delCart(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String, Object>> result_list = new ArrayList<>();
+
+        CreateDAO createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("HomePageMapper.delCart",paraMap);
+        return null;
     }
 }

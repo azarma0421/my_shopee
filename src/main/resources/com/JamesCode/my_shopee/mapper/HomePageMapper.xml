@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    不同Mapper文件的namespace要為唯一值
+    在程式中通過[ namespace + id ]定位到要執行哪一條SQL
+ -->
+<mapper namespace="com.JamesCode.my_shopee.mapper.HomePageMapper">
+    <!--
+        不同Mapper文件的namespace要為唯一值
+        在程式中通過[ namespace + id ]定位到要執行哪一條SQL
+     -->
+
+    <select id="getUserProfile" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        user_info
+        where 1=1
+        <if test="username != null and username !=''">and username = #{username}</if>
+    </select>
+
+    <select id="getProducts" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        Product
+    </select>
+
+    <select id="getCart_Detail" resultType="java.util.HashMap">
+        WITH mc AS (
+        SELECT
+        p.id,
+        p.name,
+        CASE WHEN p.onsale = 'Y' THEN p.cost * 0.9 ELSE p.cost end cost,
+        c.num,
+        p.onsale,
+        p.src
+        FROM
+        user_info u
+        INNER JOIN cart c ON u.id = c.userid
+        INNER JOIN product p ON c.productid = p.id
+        WHERE
+        u.id = #{userId}
+        ),
+        total AS (
+        SELECT
+        floor(
+        sum(cost * num)
+        ) total
+        FROM
+        (
+        SELECT
+        CASE WHEN p.onsale = 'Y' THEN p.cost * 0.9 ELSE p.cost end cost,
+        c.num
+        FROM
+        user_info u
+        INNER JOIN cart c ON u.id = c.userid
+        INNER JOIN product p ON c.productid = p.id
+        WHERE
+        u.id = #{userId}
+        ) m
+        )
+        SELECT
+        mc.id,
+        mc.name,
+        CONCAT('$', mc.cost) cost,
+        mc.num,
+        mc.onsale,
+        mc.src,
+        CONCAT('$', total) total
+        FROM
+        mc
+        LEFT JOIN total ON 1 = 1
+    </select>
+
+    <select id="getCartByUid" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        cart
+        WHERE
+        Userid = #{userId}
+        AND (
+        #{pid} = 0
+        or ProductId = #{pid}
+        )
+    </select>
+
+    <insert id="addToCart" >
+        INSERT INTO cart (UserId, ProductId, num)
+        VALUES
+        (#{userId}, #{pid}, #{num})
+    </insert>
+
+    <update id="addNumToCart" >
+        UPDATE
+        cart m
+        INNER JOIN cart c ON c.userid = #{userId}
+        AND c.productid = #{pid}
+        SET
+        m.num = (c.num + 1)
+        WHERE
+        c.id = m.id
+    </update>
+
+    <delete id="delCart" >
+        delete from
+        cart
+        where
+        UserId = #{userId}
+        and ProductId = #{pid}
+    </delete>
+</mapper>

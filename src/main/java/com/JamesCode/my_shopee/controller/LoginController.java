@@ -1,9 +1,6 @@
 package com.JamesCode.my_shopee.controller;
 
-import com.JamesCode.my_shopee.entity.Product;
-import com.JamesCode.my_shopee.entity.User;
 import com.JamesCode.my_shopee.service.ProductService;
-import com.JamesCode.my_shopee.service.ProductServiceImpl;
 import com.JamesCode.my_shopee.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-
-import static com.JamesCode.my_shopee.controller.CartController.logger;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -34,23 +32,28 @@ public class LoginController {
     }
 
     @GetMapping("/")
-    public String showhome(Model model, HttpSession session){
+    public String showhome(Model model, HttpSession session) throws IOException {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
-        logger.info("[DEBUG] Login username: " + username);
+        System.out.println("[DEBUG] Login username: " + username);
 
-        List<User> userinfo = userService.getUserProfile(username);
-        int id = userinfo.get(0).getId();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("username",username);
+        List<Map<String, Object>> result_list = userService.getUserProfile(paramMap);
 
+        String uid = result_list.get(0).get("id").toString();
         // 商品全撈
-        List<Product> products = productService.getProducts();
+        List<Map<String, Object>> products = productService.getProducts(paramMap);
         model.addAttribute("products", products);
 
-        List<ProductServiceImpl.Cart_Detail> cart = productService.getCart_Detail(id);
-        if (cart.size() == 0) {
-            cart = null;
+        paramMap.put("userId",uid);
+        result_list = productService.getCart_Detail(paramMap);
+        if (result_list.size() == 0) {
+            result_list = null;
         }
-        model.addAttribute("Cart", cart);
+
+        System.out.println("Cart result_list: "+result_list);
+        model.addAttribute("Cart", result_list);
 
         return "Home";
     }

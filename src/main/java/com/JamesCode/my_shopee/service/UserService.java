@@ -2,17 +2,12 @@ package com.JamesCode.my_shopee.service;
 
 import com.JamesCode.my_shopee.entity.User;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
-    public List<User> getUserProfile(String username);
-
-    public List<UserServiceImpl.DulUser> getUsersWithCarts();
-//    public User findById(int theId);
-//
-//    public void save(User theUser);
-//
-//    public void deleteById(int theId);
+    public List<Map<String, Object>> getUserProfile(Map<String, Object> paramap) throws IOException;
 }
 

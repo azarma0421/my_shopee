@@ -1,24 +1,20 @@
 package com.JamesCode.my_shopee.controller;
 
-import com.JamesCode.my_shopee.entity.Cart;
 import com.JamesCode.my_shopee.service.CartService;
 import com.JamesCode.my_shopee.service.ProductService;
-import com.JamesCode.my_shopee.service.ProductServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CartController {
 
     private CartService cartService;
     private ProductService productService;
-
-    static final Logger logger = LogManager.getLogger(CartController.class);
-
 
     @Autowired
     public CartController(CartService theCartService, ProductService theProductService){
@@ -27,33 +23,45 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public List<Cart> getCart(@RequestParam("userId") int userId,
-                          @RequestParam(value = "pid",required = false) Integer pid){
+    public List<Map<String, Object>> getCart(@RequestParam("userId") int userId,
+                          @RequestParam(value = "pid",required = false) Integer pid) throws IOException {
 
         if (pid == null) {
             pid = 0;
         }
         pid = pid.intValue();
-        List<Cart> cartItem = cartService.getCart(userId,pid);
-        System.out.println("cartItem: " + cartItem);
-        return cartItem;
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("pid",pid);
+        paramMap.put("userId",userId);
+
+        List<Map<String, Object>> result_list = cartService.getCart(paramMap);
+        return result_list;
     }
 
     @PutMapping("/cart")
-    public String addCart(@RequestParam("userId") int userId,@RequestParam("pid") int pid){
-        cartService.addCart(userId,pid);
-        return null;
+    public List<Map<String, Object>> addCart(@RequestParam("userId") int userId,@RequestParam("pid") int pid) throws IOException {
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("userId",userId);
+        paramMap.put("pid",pid);
+        List<Map<String, Object>> result_list = cartService.addCart(paramMap);
+        return result_list;
     }
 
     @DeleteMapping("/cart")
-    public String delCart(@RequestParam("userId") int userId,@RequestParam("pid") int pid){
-        cartService.delCart(userId,pid);
+    public String delCart(@RequestParam("userId") int userId,@RequestParam("pid") int pid) throws IOException {
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("userId",userId);
+        paramMap.put("pid",pid);
+        cartService.delCart(paramMap);
         return null;
     }
 
     @GetMapping("/cartdetail")
-    public List<ProductServiceImpl.Cart_Detail> refreshCart(@RequestParam("userId") int userId){
-        List<ProductServiceImpl.Cart_Detail> cartDetail = productService.getCart_Detail(userId);
-        return cartDetail;
+    public List<Map<String, Object>> refreshCart(@RequestParam("userId") int userId) throws IOException {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId",userId);
+        List<Map<String, Object>> result_list = productService.getCart_Detail(paramMap);
+        return result_list;
     }
 }
