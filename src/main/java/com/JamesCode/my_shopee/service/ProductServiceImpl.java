@@ -1,6 +1,5 @@
 package com.JamesCode.my_shopee.service;
 
-import com.JamesCode.my_shopee.dao.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +11,10 @@ import java.util.Map;
 @Service
 public class ProductServiceImpl implements ProductService{
 
-    private ProductRepository productRepository;
-
     private CreateDAO createDAO;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository theProductRepository,CreateDAO theCreateDAO){
-        productRepository = theProductRepository;
+    public ProductServiceImpl(CreateDAO theCreateDAO){
         createDAO = theCreateDAO;
     }
 

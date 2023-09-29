@@ -1,6 +1,5 @@
 package com.JamesCode.my_shopee.service;
 
-import com.JamesCode.my_shopee.dao.CartRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,9 @@ import java.util.Map;
 @Slf4j
 public class CartServiceImpl implements CartService{
 
-    private CartRepository CartRepository;
-
     private CreateDAO createDAO;
     @Autowired
-    public CartServiceImpl(CartRepository theCartRepository,CreateDAO theCreateDAO){
-        CartRepository = theCartRepository;
+    public CartServiceImpl(CreateDAO theCreateDAO){
         createDAO = theCreateDAO;
     }
 
