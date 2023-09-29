@@ -4,62 +4,48 @@ import com.JamesCode.my_shopee.dao.SettingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SettingServiceImpl implements SettingService {
 
     private SettingRepository settingRepository;
 
+    private CreateDAO createDAO;
+
     @Autowired
-    public SettingServiceImpl( SettingRepository theRepository){
+    public SettingServiceImpl( SettingRepository theRepository,CreateDAO theCreateDAO ){
         settingRepository = theRepository;
+        createDAO = theCreateDAO;
     }
 
     @Override
-    public List<Set_Member> get_SetMember() {
+    public List<Map<String, Object>> get_SetMember(Map<String, Object> paraMap) throws IOException {
 
-        List<Set_Member> result_list = new ArrayList<>();
-        List<Object[]> queryResult = settingRepository.get_Setmember();
-
-        for(Object[] result : queryResult){
-            int id = (int) result[0];
-            String username = (String) result[1];
-            String password = (String) result[2];
-            String status = (String) result[3];
-            String mail = (String) result[4];
-
-            Set_Member tem = new Set_Member(id, username, password, status, mail);
-            result_list.add(tem);
-        }
+        List<Map<String, Object>> result_list = new ArrayList<>();
+//        Map<String,Object> paraMap = new HashMap<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.getMember",paraMap);
         return result_list;
 
     }
 
     @Override
-    public List<Set_Product> get_SetProduct() {
-        List<Set_Product> result_list = new ArrayList<>();
-        List<Object[]> queryResult = settingRepository.get_Setproduct();
+    public List<Map<String, Object>> get_SetProduct() throws IOException {
 
-        for(Object[] result : queryResult){
-            int id = (int) result[0];
-            String Category = (String) result[1];
-            String Name = (String) result[2];
-            int Price = (int) result[3];
-            int Num = (int) result[4];
-            String onsale = (String) (result[5]+"");
-            String src = (String) result[6];
-
-
-            Set_Product tem = new Set_Product(id, Category, Name, Price, Num, onsale, src);
-            result_list.add(tem);
-        }
+        List<Map<String,Object>> result_list = new ArrayList<>();
+        Map<String,Object> paraMap = new HashMap<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.getProduct",paraMap);
         return result_list;
     }
 
     @Override
-    public List<Set_Records> get_SetRecords() {
+    public List<Map<String, Object>> get_SetRecords() {
         return null;
     }
 

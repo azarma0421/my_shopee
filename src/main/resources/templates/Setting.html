@@ -29,14 +29,15 @@
             callAPI(formId);
         }
 
-        function callAPI(formId) {
+        function callAPI(formId,json = "") {
             var currentUrl = window.location.href;
             var apiUrl;
+            var encodedJson = encodeURIComponent(json);
 
             //切換api
             switch(formId){
                 case 'formA':{
-                    apiUrl = currentUrl + '/Member';
+                    apiUrl = currentUrl + '/Member?json=' + encodedJson;
                     break;
                 }
                 case 'formB':{
@@ -78,26 +79,35 @@
             const columnA = ["#","Name","PW","Status","Mail"];
             const columnB = ["#","Category","Name","Price","Num","onsale","src"];
             const columnC = ["#","Name","PW","Status","Mail"];
+
+            const columnMapA = ["ID","USERNAME","PASSWORD","STATUS","MAIL"];
+            const columnMapB = ["ID","CATEGORY","NAME","COST","NUM","ONSALE","SRC"];
+            const columnMapC =[];
+            var columnMap =[];
             var table;
 
+            console.log("data: ",data);
+            console.log("formId: ",formId);
             //切換table
             switch(formId){
                 case 'formA':{
                     table = document.getElementById("tableA");
+                    columnMap = columnMapA;
                     break;
                 }
                 case 'formB':{
                     table = document.getElementById("tableB");
+                    columnMap = columnMapB;
                     break;
                 }
                 case 'formC':{
                     table = document.getElementById("tableC");
+                    columnMap = columnMapC;
                     break;
                 }
             }
 
             console.log("table: ",table);
-            console.log("tbody: ",tbody);
 
             //清空tbody
             var tbody = table.querySelector("tbody");
@@ -111,9 +121,11 @@
             //組成tbody
             for (var i=0;i<data.length;i++){
                 var trRow = document.createElement("tr");
-                for (var index in data[i]){
+                for (var col in columnMap){
+
                     var tdCell = document.createElement("td");
-                    tdCell.textContent = data[i][index];
+                    var colname = columnMap[col];
+                    tdCell.textContent = data[i][colname];
                     trRow.appendChild(tdCell);
                 }
                 tbody.appendChild(trRow);
@@ -121,6 +133,7 @@
             table.appendChild(tbody);
         }
 
+<!--         Button Hide-->
         function change_status(button) {
             var status = button.innerHTML;
             var table_id = button.id + "_table";
@@ -134,6 +147,35 @@
             }
         }
 
+        function processQuery_M(){
+            var ID = document.getElementById("ID").value;
+            var Name = document.getElementById("Name").value;
+            var Password = document.getElementById("PW").value;
+            var Mail = document.getElementById("Mail").value;
+            var Status = document.querySelector('input[name="Status"]:checked').value;
+
+            var param = {
+                ID: ID,
+                Name: Name,
+                Password: Password,
+                Mail: Mail,
+                Status: Status
+            };
+
+            var jsonParam = JSON.stringify(param);
+            var encodedJson = encodeURIComponent(jsonParam);
+
+            callAPI("formA",jsonParam);
+
+            return;
+        }
+
+        function processEdit_M(){
+            var ID = document.getElementById("ID").value;
+            console.log(ID);
+            alert(ID);
+            return;
+        }
     </script>
 </head>
 
@@ -163,6 +205,12 @@
     <!--    table-->
     <form id="member_table" class="container">
         <div class="row mb-3">
+            <label for="ID" class="col-sm-2 col-form-label">ID*</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="ID">
+            </div>
+        </div>
+        <div class="row mb-3">
             <label for="Name" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="Name">
@@ -182,7 +230,7 @@
         </div>
         <fieldset class="row mb-3">
             <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-            <div class="col-sm-10">
+            <div class="col-sm-6">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="Status" id="Status_Enable" value="1" checked>
                     <label class="form-check-label" for="Status_Enable">
@@ -195,6 +243,10 @@
                         Disable
                     </label>
                 </div>
+            </div>
+            <div class="col-sm-4">
+                <input type="button" class="btn btn-info" onclick="processQuery_M()" id="Query_M" value="Query"></input>
+                <input type="button" class="btn btn-info" onclick="processEdit_M()" id="Edit_M" value="Edit"></input>
             </div>
         </fieldset>
     </form>

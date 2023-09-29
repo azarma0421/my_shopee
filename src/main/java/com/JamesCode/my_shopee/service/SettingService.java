@@ -1,12 +1,14 @@
 package com.JamesCode.my_shopee.service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface SettingService {
 
-    public List<SettingServiceImpl.Set_Member> get_SetMember();
+    public List<Map<String, Object>> get_SetMember(Map<String, Object> paramap) throws IOException;
 
-    public List<SettingServiceImpl.Set_Product> get_SetProduct();
+    public List<Map<String, Object>> get_SetProduct() throws IOException;
 
-    public List<SettingServiceImpl.Set_Records> get_SetRecords();
+    public List<Map<String, Object>> get_SetRecords();
 }

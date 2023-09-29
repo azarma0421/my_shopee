@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    不同Mapper文件的namespace要為唯一值
+    在程式中通過[ namespace + id ]定位到要執行哪一條SQL
+ -->
+<mapper namespace="com.JamesCode.my_shopee.mapper.SettingMapper">
+    <!--
+        不同Mapper文件的namespace要為唯一值
+        在程式中通過[ namespace + id ]定位到要執行哪一條SQL
+     -->
+
+    <select id="getMember" resultType="java.util.HashMap">
+        SELECT
+        A.ID,
+        A.USERNAME,
+        A.PASSWORD,
+        CASE B.ENABLED
+        WHEN 1 THEN 'Enable'
+        WHEN 2 THEN 'Disable'
+        END STATUS,
+        A.MAIL
+        FROM USER_INFO A
+        LEFT JOIN USERS B ON A.USERNAME = B.USERNAME
+        where 1=1
+        <if test="ID != null and ID !=''">and ID = #{ID}</if>
+        <if test="Name != null and Name !=''">and A.USERNAME like concat('%',#{Name},'%')</if>
+        <if test="Password != null and Password !=''">and A.PASSWORD like concat('%',#{Password},'%')</if>
+        <if test="Status != null and Status !=''">and B.ENABLED = #{Status}</if>
+        <if test="Mail != null and Mail !=''">and MAIL like concat('%',#{Mail},'%')</if>
+        ;
+    </select>
+
+    <select id="getProduct" resultType="java.util.HashMap">
+        SELECT ID,
+        CATEGORY,
+        NAME,
+        COST,
+        NUM,
+        ONSALE,
+        SRC
+        FROM PRODUCT;
+    </select>
+</mapper>

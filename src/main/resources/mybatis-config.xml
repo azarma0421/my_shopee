@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
         <!-- MyBatis的全局配置文件 -->
 <configuration >
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
     <!-- 1.配置環境，可配置多個環境（比如：develop開發、test測試） -->
     <environments default="develop">
         <environment id="develop">
@@ -31,6 +36,7 @@
 
     <!-- 2.導入Mapper配置文件，如果mapper文件有多個，可以通過多個mapper標籤導入 -->
     <mappers>
-        <mapper resource="mappers/EmpMapper.xml"/>
+<!--        <mapper resource="mappers/EmpMapper.xml"/>-->
+        <package name="com.JamesCode.my_shopee.mapper" />
     </mappers>
 </configuration>
