@@ -16,7 +16,7 @@
         SELECT
         *
         FROM
-        user_info
+        users
         where 1=1
         <if test="username != null and username !=''">and username = #{username}</if>
     </select>
@@ -38,7 +38,7 @@
         p.onsale,
         p.src
         FROM
-        user_info u
+        users u
         INNER JOIN cart c ON u.id = c.userid
         INNER JOIN product p ON c.productid = p.id
         WHERE
@@ -55,7 +55,7 @@
         CASE WHEN p.onsale = 'Y' THEN p.cost * 0.9 ELSE p.cost end cost,
         c.num
         FROM
-        user_info u
+        users u
         INNER JOIN cart c ON u.id = c.userid
         INNER JOIN product p ON c.productid = p.id
         WHERE

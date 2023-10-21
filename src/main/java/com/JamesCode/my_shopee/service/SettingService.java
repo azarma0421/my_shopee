@@ -7,8 +7,12 @@ import java.util.Map;
 public interface SettingService {
 
     public List<Map<String, Object>> get_SetMember(Map<String, Object> paramap) throws IOException;
-
-    public List<Map<String, Object>> get_SetProduct() throws IOException;
-
+    public List<Map<String, Object>> get_SetProduct(Map<String, Object> paramap) throws IOException;
     public List<Map<String, Object>> get_SetRecords();
+    public List<Map<String, Object>> get_ColData(Map<String, Object> paramap) throws IOException;
+    public List<Map<String, Object>> update_SetMember(Map<String, Object> paramap) throws IOException;
+    public List<Map<String, Object>> add_SetProduct(Map<String, Object> paramap) throws IOException;
+    public List<Map<String, Object>> update_SetProduct(Map<String, Object> paramap) throws IOException;
+    public List<Map<String, Object>> del_SetProduct(Map<String, Object> paramap) throws IOException;
+
 }

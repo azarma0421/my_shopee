@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +28,32 @@ public class SettingServiceImpl implements SettingService {
     }
 
     @Override
-    public List<Map<String, Object>> get_SetProduct() throws IOException {
+    public List<Map<String, Object>> update_SetMember(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String, Object>> result_list = new ArrayList<>();
+
+        String pw = paraMap.get("PW").toString();
+        if(!"".equals(pw)){
+            paraMap.put("PW", "{noop}" + paraMap.get("PW").toString() );
+        }
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.update_user",paraMap);
+        return result_list;
+    }
+
+    @Override
+    public List<Map<String, Object>> get_SetProduct(Map<String, Object> paraMap) throws IOException {
 
         List<Map<String,Object>> result_list = new ArrayList<>();
-        Map<String,Object> paraMap = new HashMap<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.getProduct",paraMap);
+        return result_list;
+    }
+
+    @Override
+    public List<Map<String, Object>> get_ColData(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String,Object>> result_list = new ArrayList<>();
         CreateDAO createDAO = new createDAOImpl();
         result_list = createDAO.createDAOImpl("SettingMapper.getProduct",paraMap);
         return result_list;
@@ -41,5 +62,46 @@ public class SettingServiceImpl implements SettingService {
     @Override
     public List<Map<String, Object>> get_SetRecords() {
         return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> add_SetProduct(Map<String, Object> paraMap) throws IOException {
+
+        String src = "/images";
+
+        List<Map<String,Object>> result_list = new ArrayList<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.getJPGName",paraMap);
+        String name = result_list.get(0).get("name").toString();
+
+        src += "/" + paraMap.get("Category").toString();
+        src += "/" + name + ".jpg";
+
+        paraMap.put("src",src);
+
+        createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("SettingMapper.addProduct",paraMap);
+        return result_list;
+    }
+
+    @Override
+    public List<Map<String, Object>> update_SetProduct(Map<String, Object> paraMap) throws IOException {
+
+        CreateDAO createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("SettingMapper.editProduct",paraMap);
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> del_SetProduct(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String,Object>> result_list = new ArrayList<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.getProduct",paraMap);
+
+        CreateDAO createDAO1 = new createDAOImpl();
+        createDAO1.createDAOImpl("SettingMapper.delProduct",paraMap);
+
+        return result_list;
     }
 }

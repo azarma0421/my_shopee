@@ -17,7 +17,7 @@
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
     <script>
-        function showForm(formId) {
+        async function showForm(formId,json = "") {
             var forms = document.querySelectorAll('.custom-form');
             forms.forEach(function(form) {
                 form.style.display = 'none';
@@ -26,10 +26,40 @@
             var selectedForm = document.getElementById(formId);
             selectedForm.style.display = 'block';
 
-            callAPI(formId);
+            var apiUrl = makeURL(formId,json);
+
+            console.log("formId: ",formId);
+            console.log("json: ",json);
+            console.log("apiUrl: ",apiUrl);
+
+            callAPI(apiUrl, 'GET')
+                .then(data => {
+                    setdata2form(formId,data);
+                })
+                .catch(error => {
+                    console.error('[ERROR] Error in callAPI:', error);
+                });
+
         }
 
-        function callAPI(formId,json = "") {
+        function cleanform(formId){
+            const columnA = ["ID","Name","PW","Status_Enable","Mail"];
+            const columnB = ["ID","CATEGORY","NAME","COST","NUM","ONSALE","SRC"];
+            const columnC =[];
+
+            switch(formId){
+                case 'formA':
+                    clean(columnA);
+                    break;
+                case 'formB':
+                    break;
+                case 'formC':
+                    break;
+            }
+            return;
+        }
+
+        function makeURL(formId,json = ""){
             var currentUrl = window.location.href;
             var apiUrl;
             var encodedJson = encodeURIComponent(json);
@@ -41,36 +71,15 @@
                     break;
                 }
                 case 'formB':{
-                    apiUrl = currentUrl + '/Product';
+                    apiUrl = currentUrl + '/Product?json=' + encodedJson;
                     break;
                 }
                 case 'formC':{
-                    apiUrl = currentUrl + '/Member';
+                    apiUrl = currentUrl + '/Record?json=' + encodedJson;
                     break;
                 }
             }
-
-            console.log("Calling: ",apiUrl);
-
-            //call api
-            fetch(apiUrl)
-                  .then(function(response) {
-                    if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                    }
-                    var contentType = response.headers.get("content-type");
-                    if (contentType && contentType.includes("application/json")) {
-                      return response.json();
-                    } else {
-                      return response.text();
-                    }
-                  })
-                  .then(function(data) {
-                    setdata2form(formId,data);
-                  })
-                  .catch(function(error) {
-                    console.error('Fetch error:', error);
-                  });
+            return apiUrl;
         }
 
         //組成table
@@ -86,8 +95,7 @@
             var columnMap =[];
             var table;
 
-            console.log("data: ",data);
-            console.log("formId: ",formId);
+
             //切換table
             switch(formId){
                 case 'formA':{
@@ -148,33 +156,191 @@
         }
 
         function processQuery_M(){
-            var ID = document.getElementById("ID").value;
-            var Name = document.getElementById("Name").value;
-            var Password = document.getElementById("PW").value;
-            var Mail = document.getElementById("Mail").value;
-            var Status = document.querySelector('input[name="Status"]:checked').value;
+            var param = {};
+            var list = ['ID','Name','PW','Mail','Status_Enable'];
 
-            var param = {
-                ID: ID,
-                Name: Name,
-                Password: Password,
-                Mail: Mail,
-                Status: Status
-            };
-
+            param = getHTMLdata(list);
             var jsonParam = JSON.stringify(param);
-            var encodedJson = encodeURIComponent(jsonParam);
 
-            callAPI("formA",jsonParam);
-
+            showForm('formA',jsonParam);
             return;
         }
 
         function processEdit_M(){
-            var ID = document.getElementById("ID").value;
-            console.log(ID);
-            alert(ID);
+
+            var param = {};
+            var list = ['ID','Name','PW','Mail','Status_Enable'];
+
+            param = getHTMLdata(list);
+
+            var jsonParam = JSON.stringify(param);
+
+            var currentUrl = window.location.href;
+            var encodedJson = encodeURIComponent(jsonParam);
+
+            var apiUrl = currentUrl + '/Member?json=' + encodedJson;
+
+            callAPI(apiUrl, 'PUT')
+                .then(data => {
+                    showForm('formA');
+                })
+                .catch(error => {
+                    console.error('[ERROR] Error in callAPI:', error);
+                });
+
             return;
+        }
+
+        function processFIND_P(){
+            var param = {};
+            var list = ['ID_P'];
+            param = getHTMLdata(list);
+
+            var currentUrl = window.location.href;
+            var jsonParam = JSON.stringify(param);
+            var encodedJson = encodeURIComponent(jsonParam);
+            var apiUrl = currentUrl + '/Find_P?json=' + encodedJson;
+
+            callAPI(apiUrl, 'GET')
+                .then(data => {
+                    console.log("find data: ",data);
+                    document.getElementById("Category").value=data[0].CATEGORY;
+                    document.getElementById("Name_P").value=data[0].NAME;
+                    document.getElementById("Cost").value=data[0].COST;
+                    document.getElementById("num").value=data[0].NUM;
+                    document.getElementById("src").value=data[0].SRC;
+
+                    var rad = document.getElementsByName('onsale');
+                    if(data[0].ONSALE == 'Y'){
+                        rad[0].checked = true;
+                    }else{
+                        rad[1].checked = true;
+                    }
+
+                })
+                .catch(error => {
+                    console.error('[ERROR] Error in callAPI:', error);
+
+                    alert("ID NOT EXIST !!");
+                    document.getElementById("Category").value="";
+                    document.getElementById("Name_P").value="";
+                    document.getElementById("Cost").value="";
+                    document.getElementById("num").value="";
+                    document.getElementById("src").value="";
+                    document.getElementsByName('onsale').checked = true;
+                });
+            return;
+        }
+
+        function processADD_P(){
+
+            var param = {};
+
+            //轉大寫
+            var Category = document.getElementById('Category').value;
+            document.getElementById('Category').value = Category.toUpperCase();
+            var Name_P = document.getElementById('Name_P').value;
+            document.getElementById('Name_P').value = Name_P.toUpperCase();
+
+            var list = ['ID_P','Category','Name_P','Cost','num','onsale_Y','src'];
+            param = getHTMLdata(list);
+
+            // for file
+            const imageInput = document.getElementById('imageInput');
+            const selectedImage = imageInput.files[0];
+            const formDataToSend = new FormData();
+            formDataToSend.append('file', selectedImage);
+
+            formDataToSend.append('jsonData', JSON.stringify(param));
+            var currentUrl = window.location.href;
+            var apiUrl = currentUrl + '/Product';
+
+            fetch(apiUrl, {
+                method: 'POST',
+                body: formDataToSend,
+            })
+            .then(response => response.json())
+            .then(data => {
+                showForm('formB');
+                alert("Success");
+            })
+            .catch(error => {
+                console.error('[ERROR] Error in fetch:', error);
+                alert("Fail");
+            });
+        }
+
+        function processQuery_P(){
+            var param = {};
+            var list = ['ID_P','Category','Name_P','Cost','num','onsale_Y','src'];
+            param = getHTMLdata(list);
+
+            var jsonParam = JSON.stringify(param);
+            showForm('formB',jsonParam);
+            return;
+        }
+
+        function processEdit_P(){
+            var param = {};
+            var list = ['ID_P','Category','Name_P','Cost','num','onsale_Y','src'];
+
+            //轉大寫
+            var Category = document.getElementById('Category').value;
+            document.getElementById('Category').value = Category.toUpperCase();
+            var Name_P = document.getElementById('Name_P').value;
+            document.getElementById('Name_P').value = Name_P.toUpperCase();
+
+            param = getHTMLdata(list);
+
+            // for file
+            const imageInput = document.getElementById('imageInput');
+            const selectedImage = imageInput.files[0];
+            const formDataToSend = new FormData();
+            formDataToSend.append('file', selectedImage);
+
+            formDataToSend.append('json', JSON.stringify(param));
+            var currentUrl = window.location.href;
+            var apiUrl = currentUrl + '/Product';
+
+            fetch(apiUrl, {
+                method: 'PUT',
+                body: formDataToSend
+            })
+            .then(data => {
+                console.log("success!!");
+                alert("Success!!");
+                showForm('formB');
+            })
+            .catch(error => {
+                alert("Fail !!");
+                console.error('[ERROR] Error in fetch:', error);
+            });
+
+        }
+
+        function processDel_P(){
+            var param = {};
+            var list = ['ID_P'];
+            param = getHTMLdata(list);
+
+            var currentUrl = window.location.href;
+            var jsonParam = JSON.stringify(param);
+            var encodedJson = encodeURIComponent(jsonParam);
+            var apiUrl = currentUrl + '/Product?json=' + encodedJson;
+
+            callAPI(apiUrl, 'DELETE')
+                .then(data => {
+                    showForm('formB');
+                    alert("Success");
+                })
+                .catch(error => {
+                    console.error('[ERROR] Error in callAPI:', error);
+                    alert("Fail");
+                });
+        }
+
+        function buildsrc_P(){
+
         }
     </script>
 </head>
@@ -182,7 +348,7 @@
 <body>
 
 <!-- Header -->
-<header>
+<header style="position: sticky; top: 0; z-index: 100;">
     <div class="nav container">
         <div class="left-part">
             <a href="/" class="logo">Ecommerce</a>
@@ -193,9 +359,9 @@
             </form>
         </div>
         <div class="right-part">
-            <button class="btn btn-primary" onclick="showForm('formA')">Member</button>
-            <button class="btn btn-primary" onclick="showForm('formB')">Product</button>
-            <button class="btn btn-primary" onclick="showForm('formC')">Records</button>
+            <button class="btn btn-primary" onclick="showForm('formA'); cleanform('formA');">Member</button>
+            <button class="btn btn-primary" onclick="showForm('formB'); cleanform('formB');">Product</button>
+            <button class="btn btn-primary" onclick="showForm('formC'); cleanform('formC');">Records</button>
         </div>
     </div>
 </header>
@@ -219,13 +385,13 @@
         <div class="row mb-3">
             <label for="PW" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="PW">
+                <input type="text" class="form-control" id="PW">
             </div>
         </div>
         <div class="row mb-3">
             <label for="Mail" class="col-sm-2 col-form-label">Mail</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="Mail">
+                <input type="text" class="form-control" id="Mail">
             </div>
         </div>
         <fieldset class="row mb-3">
@@ -245,8 +411,8 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <input type="button" class="btn btn-info" onclick="processQuery_M()" id="Query_M" value="Query"></input>
-                <input type="button" class="btn btn-info" onclick="processEdit_M()" id="Edit_M" value="Edit"></input>
+                <input type="button" class="btn btn-info" onclick="processQuery_M()" id="Query_M" value="Query">
+                <input type="button" class="btn btn-info" onclick="processEdit_M()" id="Edit_M" value="Edit">
             </div>
         </fieldset>
     </form>
@@ -275,6 +441,82 @@
 
 <!-- Form B -->
 <div id="formB" class="custom-form" style="display: none;">
+
+    <!--    table-->
+    <form id="product_table" class="container">
+        <div class="row mb-3">
+            <label for="ID_P" class="col-sm-2 col-form-label">ID*</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="ID_P" style="width: 200px;">
+                <input type="button" class="btn btn-info" onclick="processFIND_P()" id="FIND" value="Find">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Category" class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="Category">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Name_P" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="Name_P">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Cost" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="Cost">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="num" class="col-sm-2 col-form-label">num</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="num">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">jpg</label>
+            <div class="col-sm-10">
+                <input type="file" id="imageInput" accept=".jpg, .jpeg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">src</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="src" readonly>
+            </div>
+        </div>
+        <fieldset class="row mb-3">
+            <legend class="col-form-label col-sm-2 pt-0">onsale</legend>
+            <div class="col-sm-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="onsale" id="onsale_Y" value="Y" checked>
+                    <label class="form-check-label" for="onsale_Y">
+                        YYY
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="onsale" id="onsale_N" value="N">
+                    <label class="form-check-label" for="onsale_N">
+                        NNN
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <input type="button" class="btn btn-info" onclick="processADD_P()" id="ADD_P" value="ADD">
+                <input type="button" class="btn btn-info" onclick="processQuery_P()" id="Query_P" value="Query">
+                <input type="button" class="btn btn-info" onclick="processEdit_P()" id="Edit_P" value="Edit">
+                <input type="button" class="btn btn-info" onclick="processDel_P()" id="Del_P" value="Delete">
+            </div>
+        </fieldset>
+    </form>
+
+    <!--    button-->
+    <div class="container">
+        <button class="btn btn-info" onclick="change_status(this)" id="product">HIDE</button>
+    </div>
+
     <form>
         <table  id="tableB" class="table container">
             <thead>
@@ -301,6 +543,8 @@
         <!-- Your form C content here -->
     </form>
 </div>
+
+<script src="js/common.js"></script>
 
 </body>
 </html>

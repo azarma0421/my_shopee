@@ -13,12 +13,12 @@ public class CommonFUNCImpl implements CommonFUNC{
     @Override
     public Map<String, Object> json2Map(String jsonParam) {
 
-        System.out.println("jsonParam: " + jsonParam);
-
         if(jsonParam == null || jsonParam == ""){
             System.out.println("jsonParam is null");
             return null;
         }
+        System.out.println("jsonParam: " + jsonParam);
+
         Map<String, Object> jsonData = new HashMap<>();
         try {
             // URL-decode the JSON data

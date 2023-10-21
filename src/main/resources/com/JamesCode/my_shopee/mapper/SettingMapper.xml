@@ -11,28 +11,41 @@
         不同Mapper文件的namespace要為唯一值
         在程式中通過[ namespace + id ]定位到要執行哪一條SQL
      -->
-
+    <!-- ============================ formA ===================================  -->
     <select id="getMember" resultType="java.util.HashMap">
         SELECT
-        A.ID,
-        A.USERNAME,
-        A.PASSWORD,
-        CASE B.ENABLED
+        ID,
+        USERNAME,
+        substring(PASSWORD,7) PASSWORD,
+        CASE ENABLED
         WHEN 1 THEN 'Enable'
-        WHEN 2 THEN 'Disable'
+        WHEN 0 THEN 'Disable'
         END STATUS,
-        A.MAIL
-        FROM USER_INFO A
-        LEFT JOIN USERS B ON A.USERNAME = B.USERNAME
+        MAIL
+        FROM USERS
         where 1=1
         <if test="ID != null and ID !=''">and ID = #{ID}</if>
-        <if test="Name != null and Name !=''">and A.USERNAME like concat('%',#{Name},'%')</if>
-        <if test="Password != null and Password !=''">and A.PASSWORD like concat('%',#{Password},'%')</if>
-        <if test="Status != null and Status !=''">and B.ENABLED = #{Status}</if>
+        <if test="Name != null and Name !=''">and USERNAME like concat('%',#{Name},'%')</if>
+        <if test="Password != null and Password !=''">and PASSWORD like concat('%',#{Password},'%')</if>
+        <if test="Status != null and Status !=''">and ENABLED = #{Status}</if>
         <if test="Mail != null and Mail !=''">and MAIL like concat('%',#{Mail},'%')</if>
         ;
     </select>
 
+    <update id="update_user">
+        update
+        users
+        set
+        <if test="Name != null and Name !=''">username = #{Name},</if>
+        <if test="PW != null and PW !=''">Password = #{PW},</if>
+        <if test="Mail != null and Mail !=''">Mail = #{Mail},</if>
+        <if test="Status != null and Status !=''">enabled = #{Status},</if>
+        ID = #{ID}
+        where 1=1
+        and ID = #{ID}
+    </update>
+
+    <!-- ============================ formB ===================================  -->
     <select id="getProduct" resultType="java.util.HashMap">
         SELECT ID,
         CATEGORY,
@@ -41,6 +54,68 @@
         NUM,
         ONSALE,
         SRC
-        FROM PRODUCT;
+        FROM PRODUCT
+        where 1=1
+        <if test="ID_P != null and ID_P !=''">and ID = #{ID_P}</if>
+        <if test="Category != null and Category !=''">and CATEGORY like concat('%',#{Category},'%')</if>
+        <if test="Name_P != null and Name_P !=''">and NAME like concat('%',#{Name_P},'%')</if>
+        <if test="Cost != null and Cost !=''">and Cost = #{Cost}</if>
+        <if test="num != null and num !=''">and num = #{num}</if>
+        <if test="onsale != null and onsale !=''">and ONSALE = #{onsale}</if>
+        <if test="src != null and src !=''">and src = #{src}</if>
+        ;
     </select>
+
+    <select id="getJPGName" resultType="java.util.HashMap">
+        SELECT
+        CASE
+        WHEN COUNT(1) + 1 &lt; 10 THEN CONCAT(#{Category}, '_00', COUNT(1) + 1)
+        WHEN COUNT(1) + 1 &lt; 100 THEN CONCAT(#{Category}, '_0', COUNT(1) + 1)
+        WHEN COUNT(1) + 1 >= 100 THEN CONCAT(#{Category}, '_', COUNT(1) + 1)
+        END name
+        FROM
+        product
+        WHERE 1=1
+        <if test="Category != null and Category !=''">and Category = #{Category}</if>
+        ;
+    </select>
+
+    <insert id="addProduct">
+        insert into product (
+        CATEGORY, NAME, Cost, num, ONSALE , src
+        )
+        values
+        (
+        #{Category},
+        #{Name_P},
+        #{Cost},
+        #{num},
+        #{onsale},
+        #{src}
+        )
+    </insert>
+
+    <update id="editProduct">
+        update
+        product
+        set
+        <if test="Category != null and Category !=''">CATEGORY = #{Category},</if>
+        <if test="Name_P != null and Name_P !=''">NAME = #{Name_P},</if>
+        <if test="Cost != null and Cost !=''">Cost = #{Cost},</if>
+        <if test="num != null and num !=''">num = #{num},</if>
+        <if test="onsale != null and onsale !=''">ONSALE = #{onsale},</if>
+        <if test="src != null and src !=''">src = #{src},</if>
+        ID = #{ID_P}
+        where 1=1
+        and ID = #{ID_P}
+    </update>
+
+    <delete id="delProduct">
+        DELETE FROM
+        product
+        WHERE
+        ID = #{ID_P}
+    </delete>
+    <!-- ============================ formC ===================================  -->
+
 </mapper>
