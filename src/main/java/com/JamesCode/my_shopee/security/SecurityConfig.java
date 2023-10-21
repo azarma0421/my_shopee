@@ -25,18 +25,6 @@ public class SecurityConfig {
         return new JdbcUserDetailsManager(dataSource);
     }
 
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsManager(){
-//
-//        UserDetails john = User.builder()
-//                .username("admin")
-//                .password("{noop}admin")
-//                .roles("EMPLOYEE")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(john);
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
