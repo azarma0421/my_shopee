@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +78,6 @@ public class CartServiceImpl implements CartService{
         return null;
     }
 
-
     @Override
     public List<Map<String, Object>> delCart(Map<String, Object> paraMap) throws IOException {
 
@@ -84,6 +85,48 @@ public class CartServiceImpl implements CartService{
 
         CreateDAO createDAO = new createDAOImpl();
         createDAO.createDAOImpl("HomePageMapper.delCart",paraMap);
+        return null;
+    }
+
+    @Override
+    public String processCheckstock(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String, Object>> result_list = new ArrayList<>();
+        int status = -1;
+        String msg = "";
+
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("HomePageMapper.checkStock",paraMap);
+        if(!result_list.isEmpty()){
+            for(int i=0 ; i<result_list.size() ; i++){
+                Map temp = result_list.get(i);
+                msg += temp.get("name") + " only has " + temp.get("max_num") + " left !";
+                msg += "\n";
+            }
+        }
+        if(msg != null) return msg;
+
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> processBuy(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String, Object>> result_list = new ArrayList<>();
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        paraMap.put("date",formattedDateTime);
+
+        createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("HomePageMapper.insert_records",paraMap);
+
+        createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("HomePageMapper.delCart",paraMap);
+
+        createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("HomePageMapper.setToProduct",paraMap);
         return null;
     }
 }

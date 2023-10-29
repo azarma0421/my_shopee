@@ -64,4 +64,20 @@ public class CartController {
         List<Map<String, Object>> result_list = productService.getCart_Detail(paramMap);
         return result_list;
     }
+
+    @GetMapping("/Checkout")
+    public String processCheckstock(@RequestParam("userId") int userId) throws IOException {
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("userId",userId);
+        String msg = cartService.processCheckstock(paramMap);
+        return msg;
+    }
+
+    @PostMapping("/Checkout")
+    public List<Map<String, Object>> processBuy(@RequestParam("userId") int userId) throws IOException {
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("userId",userId);
+        List<Map<String, Object>> msg = cartService.processBuy(paramMap);
+        return null;
+    }
 }

@@ -116,9 +116,24 @@
         <if test="pid != null and pid !=''">and ProductId = #{pid}</if>
     </delete>
 
+    <select id="checkStock" resultType="java.util.HashMap">
+        SELECT
+        a.UserId,
+        b.name,
+        a.ProductId,
+        a.num reuqire_num,
+        b.num max_num
+        FROM
+        cart a
+        INNER JOIN product b ON b.id = a.ProductId
+        WHERE
+        a.UserId = #{userId}
+        AND a.num > b.num
+    </select>
+
     <insert id="insert_records" >
-        INSERT INTO records (PKNO, UserId, username, pId, pname, num, price, onsale_mk)
-        (SELECT #{date} PKNO,
+        INSERT INTO records (NO, UserId, username, pId, pname, num, price, onsale_mk)
+        (SELECT #{date} NO,
         a.UserId,
         b.username,
         a.ProductId pId,
@@ -134,4 +149,22 @@
         INNER JOIN product c ON a.ProductId = c.id
         WHERE UserId = #{userId} )
     </insert>
+
+    <update id="setToProduct" >
+        UPDATE
+        product p
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        cart
+        WHERE
+        UserId = #{userId}
+        ) c
+        SET
+        p.num = p.num - c.num
+        WHERE
+        p.id = c.ProductId
+    </update>
+
 </mapper>

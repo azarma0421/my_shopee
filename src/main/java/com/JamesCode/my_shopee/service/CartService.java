@@ -11,4 +11,6 @@ public interface CartService {
     public List<Map<String, Object>> addToCart(Map<String, Object> paramap) throws IOException;
     public List<Map<String, Object>> addNumToCart(Map<String, Object> paramap) throws IOException;
     public List<Map<String, Object>> delCart(Map<String, Object> paramap) throws IOException;
+    public String processCheckstock(Map<String, Object> paramap) throws IOException;
+    public List<Map<String, Object>> processBuy(Map<String, Object> paramap) throws IOException;
 }
