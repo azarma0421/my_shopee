@@ -22,9 +22,12 @@
         <form th:action="@{logout}" method="POST">
             <input type="submit" value="Logout"/>
         </form>
-        <form sec:if="hasRole('ADMIN')" th:action="@{SettingPage}" method="POST">
+        <form id="setting_form" th:action="@{SettingPage}" method="POST" style="display: block;">
             <input type="submit" value="TO Setting"/>
         </form>
+
+        <input type="hidden" id="role" th:value="${ROLE}" />
+        <input type="hidden" id="uid" th:value="${UserId}" />
 
         <i class='bx bx-cart' id="cart-icon"></i>
 
@@ -56,7 +59,7 @@
                         <div th:text="${Cart[0].total}" class="total-price"></div>
                     </div>
                     <!--Buy Button-->
-                    <button type="button" class="btn-buy">Buy Now</button>
+                    <button type="button" id="btn-buy" class="btn-buy">Buy Now</button>
                     <!--            Cart Close-->
                 </div>
             </div>
@@ -75,9 +78,11 @@
             <input type="hidden" class="id" th:value="${product.id}" />
             <img th:src="${product.src}" alt="" class="product-img">
             <h2 th:text="${product.name}" class="product-title"></h2>
-            <span th:text="${product.cost}" class="price"></span>
+            <span th:if="${product.R_price == product.cost}" th:text="${product.cost}" class="price"></span>
+            <span th:if="${product.R_price != product.cost}" th:text="${product.cost}" class="price" style="text-decoration: line-through" yle></span>
+            <span th:if="${product.R_price != product.cost}" th:text="${product.R_price}" class="price"></span>
             <i class="bx bx-shopping-bag add-cart"></i>
-        </div>
+        </span>
     </div>
 </section>
 <!--JS-->

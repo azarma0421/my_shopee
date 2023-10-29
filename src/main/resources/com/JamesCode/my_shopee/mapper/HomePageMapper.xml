@@ -7,10 +7,6 @@
     在程式中通過[ namespace + id ]定位到要執行哪一條SQL
  -->
 <mapper namespace="com.JamesCode.my_shopee.mapper.HomePageMapper">
-    <!--
-        不同Mapper文件的namespace要為唯一值
-        在程式中通過[ namespace + id ]定位到要執行哪一條SQL
-     -->
 
     <select id="getUserProfile" resultType="java.util.HashMap">
         SELECT
@@ -23,9 +19,16 @@
 
     <select id="getProducts" resultType="java.util.HashMap">
         SELECT
-        *
+        id,
+        category,
+        name,
+        cost,
+        case onsale when 'Y' then FLOOR(cost * 0.9) else cost end R_price,
+        num,
+        onsale,
+        src
         FROM
-        Product
+        ecommerce.product;
     </select>
 
     <select id="getCart_Detail" resultType="java.util.HashMap">
@@ -33,7 +36,7 @@
         SELECT
         p.id,
         p.name,
-        CASE WHEN p.onsale = 'Y' THEN p.cost * 0.9 ELSE p.cost end cost,
+        CASE WHEN p.onsale = 'Y' THEN FLOOR(p.cost * 0.9) ELSE p.cost end cost,
         c.num,
         p.onsale,
         p.src
@@ -52,7 +55,7 @@
         FROM
         (
         SELECT
-        CASE WHEN p.onsale = 'Y' THEN p.cost * 0.9 ELSE p.cost end cost,
+        CASE WHEN p.onsale = 'Y' THEN FLOOR(p.cost * 0.9) ELSE p.cost end cost,
         c.num
         FROM
         users u
@@ -110,6 +113,25 @@
         cart
         where
         UserId = #{userId}
-        and ProductId = #{pid}
+        <if test="pid != null and pid !=''">and ProductId = #{pid}</if>
     </delete>
+
+    <insert id="insert_records" >
+        INSERT INTO records (PKNO, UserId, username, pId, pname, num, price, onsale_mk)
+        (SELECT #{date} PKNO,
+        a.UserId,
+        b.username,
+        a.ProductId pId,
+        c.`name`,
+        a.num,
+        CASE c.onsale
+        WHEN 'Y' THEN ROUND(c.cost * 0.9, 0)
+        WHEN 'N' THEN c.cost
+        END price,
+        c.onsale
+        FROM cart a
+        INNER JOIN users b ON a.UserId = b.id
+        INNER JOIN product c ON a.ProductId = c.id
+        WHERE UserId = #{userId} )
+    </insert>
 </mapper>
