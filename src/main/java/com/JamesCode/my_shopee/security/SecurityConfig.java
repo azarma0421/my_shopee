@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -50,6 +51,9 @@ public class SecurityConfig {
                                                 HttpServletResponse response,
                                                 Authentication authentication) throws IOException {
                 String username = authentication.getName(); // Get the username from the Authentication object
+                for (GrantedAuthority auth : authentication.getAuthorities()) {
+                    request.getSession().setAttribute("ROLE", auth.getAuthority());
+                }
                 request.getSession().setAttribute("username", username); // Store the username in the session
                 getRedirectStrategy().sendRedirect(request, response, "/");
             }

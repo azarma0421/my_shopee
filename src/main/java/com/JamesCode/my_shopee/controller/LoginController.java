@@ -34,8 +34,10 @@ public class LoginController {
     @GetMapping("/")
     public String showhome(Model model, HttpSession session) throws IOException {
         String username = (String) session.getAttribute("username");
+        String ROLE = (String) session.getAttribute("ROLE");
         model.addAttribute("username", username);
         System.out.println("[DEBUG] Login username: " + username);
+        System.out.println("[DEBUG] Login role: " + ROLE);
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("username",username);
@@ -54,7 +56,8 @@ public class LoginController {
 
         System.out.println("Cart result_list: "+result_list);
         model.addAttribute("Cart", result_list);
-
+        model.addAttribute("ROLE", ROLE);
+        model.addAttribute("UserId", uid);
         return "Home";
     }
 }
