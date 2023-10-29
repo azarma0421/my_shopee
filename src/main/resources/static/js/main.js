@@ -3,6 +3,11 @@ let cartIcon = document.querySelector("#cart-icon");
 let cart = document.querySelector(".cart");
 let closeCart = document.querySelector("#close-cart");
 
+// user info
+const role = document.getElementById("role").value;
+const userId = document.getElementById("uid").value;
+
+
 // open cart
 cartIcon.onclick = () => {
         cart.classList.add("active");
@@ -15,7 +20,6 @@ closeCart.onclick = () => {
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready);
 } else {
-    // refreshCache();
     ready();
 }
 
@@ -46,6 +50,17 @@ function ready() {
         var button = addCart[i];
         button.addEventListener("click", addCartClicked);
     }
+
+// show setting btn
+    var form = document.getElementById("setting_form");
+    if(role == 'ROLE_ADMIN'){
+        form.style.display = "block";
+    }else{
+        form.style.display = "none";
+    }
+
+    var btn_buy = document.getElementById('btn-buy');
+    btn_buy.addEventListener("click", processBuy);
 }
 
 // add item to  cart
@@ -53,9 +68,6 @@ function addCartClicked(event) {
     var addButton = event.target;
     var productBox = addButton.parentElement;
     var pid = productBox.querySelector('.id').value;
-
-//    test
-    var userId = 1;
 
     var url = '/cart?pid=' + encodeURIComponent(pid)
     + '&userId=' + encodeURIComponent(userId);
@@ -73,14 +85,26 @@ function addCartClicked(event) {
       });
 }
 
+// buy them all
+function processBuy() {
+    var url = '/Checkout?userId=' + encodeURIComponent(userId);
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        success: function(response) {
+            refreshCart(userId);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+      });
+}
+
 // delete item from cart
 function delFromCart(event) {
     var delButton = event.target;
     var productBox = delButton.parentElement;
     var pid = productBox.querySelector('.id').value;
-
-//    test
-    var userId = 1;
 
     var url = '/cart?pid=' + encodeURIComponent(pid)
     + '&userId=' + encodeURIComponent(userId);
