@@ -97,14 +97,14 @@ public class CartServiceImpl implements CartService{
 
         CreateDAO createDAO = new createDAOImpl();
         result_list = createDAO.createDAOImpl("HomePageMapper.checkStock",paraMap);
-        if(!result_list.isEmpty()){
+        if(result_list.size() != 0){
             for(int i=0 ; i<result_list.size() ; i++){
                 Map temp = result_list.get(i);
                 msg += temp.get("name") + " only has " + temp.get("max_num") + " left !";
                 msg += "\n";
             }
         }
-        if(msg != null) return msg;
+        if(!"".equals(msg)) return msg;
 
         return null;
     }

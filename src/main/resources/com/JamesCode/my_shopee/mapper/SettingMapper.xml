@@ -117,5 +117,43 @@
         ID = #{ID_P}
     </delete>
     <!-- ============================ formC ===================================  -->
+    <select id="getRecord" resultType="java.util.HashMap">
+        select
+        a.PKNO,
+        a.NO,
+        DATE_FORMAT(
+        STR_TO_DATE(a.NO, '%Y%m%d%H%i%s'),
+        '%Y-%m-%d %H:%i:%s'
+        ) DT,
+        a.UserId,
+        a.username,
+        a.pId,
+        a.pname,
+        a.num,
+        a.price amount,
+        a.onsale_mk,
+        a.status,
+        b.value value
+        from
+        records a
+        inner join status b on a.status = b.key
+        and b.name = 'record_status'
+        where
+        1 = 1
+        <if test="NO != null and NO !=''">and NO = #{NO}</if>
+        <if test="Date_Time_S != null and Date_Time_S !=''">and NO >= #{Date_Time_S}</if>
+        <if test="Date_Time_E != null and Date_Time_E !=''">and NO &lt;= #{Date_Time_E}</if>
+        <if test="amount != null and amount !=''">and price = #{amount}</if>
+        <if test="status != null and status !=''">and status = #{status}</if>
+        order by
+        pkno desc;
+    </select>
 
+    <update id="editR_status">
+        update
+        records
+        set
+        status = #{status}
+        where 1=1
+    </update>
 </mapper>

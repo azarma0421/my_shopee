@@ -2,7 +2,6 @@ package com.JamesCode.my_shopee.controller;
 
 import com.JamesCode.my_shopee.service.CommonFUNC;
 import com.JamesCode.my_shopee.service.SettingService;
-//import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -212,5 +210,15 @@ public class SetController {
             System.err.println("File does not exist.");
         }
         return null;
+    }
+
+    @GetMapping("/SettingPage/Record")
+    @ResponseBody
+    public List<Map<String, Object>> getRecords(
+            @RequestParam(value = "json", required = false) String jsonParam)
+            throws IOException {
+        Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);
+        List<Map<String, Object>> result_list = settingService.get_SetRecords(jsonData);
+        return result_list;
     }
 }

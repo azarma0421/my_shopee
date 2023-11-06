@@ -60,7 +60,19 @@ public class SettingServiceImpl implements SettingService {
     }
 
     @Override
-    public List<Map<String, Object>> get_SetRecords() {
+    public List<Map<String, Object>> get_SetRecords(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String,Object>> result_list = new ArrayList<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("SettingMapper.getRecord",paraMap);
+        return result_list;
+    }
+
+    @Override
+    public List<Map<String, Object>> update_SetR_status(Map<String, Object> paraMap) throws IOException {
+
+        CreateDAO createDAO = new createDAOImpl();
+        createDAO.createDAOImpl("SettingMapper.editR_status",paraMap);
         return null;
     }
 

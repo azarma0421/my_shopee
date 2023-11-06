@@ -25,6 +25,9 @@
         <form id="setting_form" th:action="@{SettingPage}" method="POST" style="display: block;">
             <input type="submit" value="TO Setting"/>
         </form>
+        <form th:action="@{OrdersPage}" method="POST">
+            <input type="submit" value="Orders"/>
+        </form>
 
         <input type="hidden" id="role" th:value="${ROLE}" />
         <input type="hidden" id="uid" th:value="${UserId}" />
