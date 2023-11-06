@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Comatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>myWebsite</title>
+    <link rel="stylesheet" href="css/setting.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script>
+        function change_status(button) {
+            var status = button.innerHTML;
+            var form = document.getElementById("order_table");
+            if(status == 'SHOW'){
+                button.innerHTML = 'HIDE';
+                form.style.display = 'block';
+            } else{
+                button.innerHTML = 'SHOW';
+                form.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+
+<!-- Header -->
+<header style="position: sticky; top: 0; z-index: 100;">
+    <div class="nav container">
+        <div class="left-part">
+            <a href="/" class="logo">Ecommerce</a>
+        </div>
+    </div>
+</header>
+
+<div class="custom-form">
+    <!--    table-->
+    <form id="order_table" class="container">
+        <div class="row mb-3">
+            <label for="NO" class="col-sm-2 col-form-label">Order_NO</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="NO" style="width: 200px;">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Date_Time_S" class="col-sm-2 col-form-label">Date_Time</label>
+            <div class="col-sm-10" >
+                <input type="text" class="form-control" id="Date_Time_S" style="width: 200px; display: inline;">  ~
+                <input type="text" class="form-control" id="Date_Time_E" style="width: 200px; display: inline;">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Amount" class="col-sm-2 col-form-label">Amount</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="Amount" style="width: 200px;">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="Amount" class="col-sm-2 col-form-label">Status</label>
+            <select name="status" id="status" class="col-sm-2 col-form-label">
+                <option value="0">0_Paying</option>
+                <option value="1">1_Have paid</option>
+                <option value="2">2_Delivery</option>
+                <option value="3">3_Arrival</option>
+                <option value="4">4_Complete</option>
+                <option value="-4">-4_Cancel</option>
+            </select>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-4">
+                <input type="button" class="btn btn-info" onclick="processQuery()" id="Query_btn" value="Query">
+                <input type="button" class="btn btn-info" onclick="processSave()" id="Save_btn" value="Save">
+            </div>
+        </div>
+    </form>
+    <!--    button-->
+    <div class="container">
+        <button class="btn btn-info" onclick="change_status(this)" id="member">HIDE</button>
+    </div>
+    <!--data-->
+    <form id="order_data" class="container">
+        <table class="table container">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">NO</th>
+                <th scope="col">Date_Time</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script src="js/common.js"></script>
+
+</body>
+</html>
