@@ -93,7 +93,7 @@ function processCheckstock() {
         type: 'GET',
         success: function(response) {
         console.log("response: ",response);
-            if(response != null){
+            if(response != ""){
                 alert(response);
             }else{
                 processBuy(userId);
