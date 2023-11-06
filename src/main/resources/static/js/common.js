@@ -56,8 +56,9 @@ callAPI(apiUrl, 'GET')
                 var target = 'input[name="' + element.name + '"]:checked';
                 data = document.querySelector(target).value
                 list[i] = element.name;
+            } else if(element.type === 'select-one'){
+                data = element.value;
             }
-
 
             param[list[i]] = data;
         }
