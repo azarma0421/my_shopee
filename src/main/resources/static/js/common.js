@@ -38,6 +38,19 @@ callAPI(apiUrl, 'GET')
     }
 
 /*
+** 將json加入中
+**
+** url 呼叫之api
+** json 呼叫參數
+**
+*/
+    function makeURL(url,json = ""){
+        var encodedJson = encodeURIComponent(json);
+        apiUrl = url + '?json=' +encodedJson;
+        return apiUrl;
+    }
+
+/*
 **
 ** list id集合
 ** method 呼叫方式
@@ -79,6 +92,10 @@ callAPI(apiUrl, 'GET')
                 element.value = "";
             } else if(element.type === 'radio'){
                 document.getElementsByName(element.name)[0].checked = true;
+            } else if(element.type === 'file'){
+                element.value = "";
+            } else if(element.type === 'select-one'){
+                element.value=0;
             }
         }
     }
