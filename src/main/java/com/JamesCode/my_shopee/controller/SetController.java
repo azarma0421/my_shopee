@@ -221,4 +221,14 @@ public class SetController {
         List<Map<String, Object>> result_list = settingService.get_SetRecords(jsonData);
         return result_list;
     }
+
+    @PutMapping("/SettingPage/Record")
+    @ResponseBody
+    public List<Map<String, Object>> updateRecords(
+            @RequestParam(value = "json", required = false) String jsonParam)
+            throws IOException {
+        Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);
+        List<Map<String, Object>> result_list = settingService.update_SetR_status(jsonData);
+        return result_list;
+    }
 }
