@@ -26,7 +26,7 @@
             var selectedForm = document.getElementById(formId);
             selectedForm.style.display = 'block';
 
-            var apiUrl = makeURL(formId,json);
+            var apiUrl = getUrlByformId(formId,json);
 
             console.log("formId: ",formId);
             console.log("json: ",json);
@@ -44,42 +44,43 @@
 
         function cleanform(formId){
             const columnA = ["ID","Name","PW","Status_Enable","Mail"];
-            const columnB = ["ID","CATEGORY","NAME","COST","NUM","ONSALE","SRC"];
-            const columnC =[];
+            const columnB = ["ID_P","Category","Name_P","Cost","num","imageInput","src","onsale_Y"];
+            const columnC = ["NO","Date_Time_S","Date_Time_E","amount","status"];
 
             switch(formId){
                 case 'formA':
                     clean(columnA);
                     break;
                 case 'formB':
+                    clean(columnB);
                     break;
                 case 'formC':
+                    clean(columnC);
                     break;
             }
             return;
         }
 
-        function makeURL(formId,json = ""){
+        function getUrlByformId(formId,json = ""){
             var currentUrl = window.location.href;
             var apiUrl;
-            var encodedJson = encodeURIComponent(json);
 
             //切換api
             switch(formId){
                 case 'formA':{
-                    apiUrl = currentUrl + '/Member?json=' + encodedJson;
+                    apiUrl = currentUrl + '/Member';
                     break;
                 }
                 case 'formB':{
-                    apiUrl = currentUrl + '/Product?json=' + encodedJson;
+                    apiUrl = currentUrl + '/Product';
                     break;
                 }
                 case 'formC':{
-                    apiUrl = currentUrl + '/Record?json=' + encodedJson;
+                    apiUrl = currentUrl + '/Record';
                     break;
                 }
             }
-            return apiUrl;
+            return makeURL(apiUrl,json);
         }
 
         //組成table
@@ -196,6 +197,10 @@
             var list = ['ID_P'];
             param = getHTMLdata(list);
 
+            if(param.ID_P == ''){
+                alert("Type something!!");
+                return ;
+            }
             var currentUrl = window.location.href;
             var jsonParam = JSON.stringify(param);
             var encodedJson = encodeURIComponent(jsonParam);
@@ -353,6 +358,35 @@
             return;
         }
 
+        function processSave_R(){
+            var param = {};
+            var list = ['NO','status'];
+            param = getHTMLdata(list);
+
+            if(param.NO ==''){
+                alert("Order_NO cant be empty!");
+                return;
+            }
+            if(param.status ==''){
+                alert("Status cant be ALL!");
+                return;
+            }
+
+            var currentUrl = window.location.href;
+            var jsonParam = JSON.stringify(param);
+            var encodedJson = encodeURIComponent(jsonParam);
+            var apiUrl = currentUrl + '/Record?json=' + encodedJson;
+
+            callAPI(apiUrl, 'PUT')
+                .then(data => {
+                    showForm('formC');
+                    alert("Success");
+                })
+                .catch(error => {
+                    console.error('[ERROR] Error in callAPI:', error);
+                    alert("Fail");
+                });
+        }
     </script>
 </head>
 
@@ -458,7 +492,7 @@
         <div class="row mb-3">
             <label for="ID_P" class="col-sm-2 col-form-label">ID*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="ID_P" style="width: 200px;">
+                <input type="text" class="form-control" id="ID_P" style="width: 200px; display: inline;">
                 <input type="button" class="btn btn-info" onclick="processFIND_P()" id="FIND" value="Find">
             </div>
         </div>
