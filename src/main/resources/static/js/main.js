@@ -234,6 +234,23 @@ function quantityChange(event) {
     var shopProducts = button.parentElement;
 }
 
+function orderPage() {
+    var param = {};
+    param['userId'] = userId;
+    var jsonParam = JSON.stringify(param);
+    var currentUrl = window.location.href;
+
+    var apiUrl = currentUrl + 'SettingPage';
+    apiUrl = makeURL(apiUrl,jsonParam);
+    callAPI(apiUrl, 'POST')
+        .then(data => {
+            window.location.href = '/SettingPage';
+        })
+        .catch(error => {
+            console.error('[ERROR] Error in callAPI:', error);
+        });
+}
+
 // unused
 //function updatetotal(){
 //    var cartContent = document.getElementsByClassName('cart-content')[0];

@@ -99,3 +99,70 @@ callAPI(apiUrl, 'GET')
             }
         }
     }
+
+/*
+** auto_append 1 自動append進table 0 返回tbody (暫時移除)
+** tableId 目標tableID
+** column 資料及欄位ID集合，需對應頁面順序
+** data 資料集index
+*/
+    function data2table(tableId,columnMap,data){
+
+        var table = document.getElementById(tableId);
+        //清空tbody
+        var tbody = table.querySelector("tbody");
+
+        if(tbody != null){
+            while (tbody.firstChild) {
+              tbody.removeChild(tbody.firstChild);
+            }
+        }
+
+        //組成tbody
+        for (var i=0;i<data.length;i++){
+            var trRow = document.createElement("tr");
+            for (var col in columnMap){
+
+                var tdCell = document.createElement("td");
+                var colname;
+                if(col == ""){
+                    colname = "";
+                    tdCell.textContent = "";
+                } else {
+                    colname = columnMap[col];
+                    tdCell.textContent = data[i][colname];
+                }
+                trRow.appendChild(tdCell);
+            }
+            tbody.appendChild(trRow);
+        }
+        console.log("tbody: ",tbody);
+        return tbody;
+//            table.appendChild(tbody);
+    }
+
+/*
+** tbody
+** target 目標欄位，第幾個td
+** btn 按鈕value
+** btn 按鈕name
+** func 按鈕觸發func名稱
+**
+*/
+    function addBTN2table(tbody,target,btn_val,btn_nm,functions){
+        var rows = tbody.getElementsByTagName("tr");
+          for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+            for (var j = 0; j < cells.length; j++) {
+                if(j==target){
+                console.log("cells: ==");
+                    var button = document.createElement("button");
+                    button.id = cells[j].innerText;
+                    button.innerText = btn_val;
+                    button.type = "button";
+                    button.setAttribute("onclick", functions);
+                    cells[j].parentNode.replaceChild(button, cells[j]);
+                }
+            }
+          }
+    }

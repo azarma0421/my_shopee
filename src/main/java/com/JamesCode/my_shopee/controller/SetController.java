@@ -38,7 +38,7 @@ public class SetController {
     }
 
     @PostMapping("/SettingPage")
-    public String showLoginPage(){
+    public String showPage(){
         return "Setting";
     }
 
@@ -215,6 +215,16 @@ public class SetController {
     @GetMapping("/SettingPage/Record")
     @ResponseBody
     public List<Map<String, Object>> getRecords(
+            @RequestParam(value = "json", required = false) String jsonParam)
+            throws IOException {
+        Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);
+        List<Map<String, Object>> result_list = settingService.get_SetRecords(jsonData);
+        return result_list;
+    }
+
+    @GetMapping("/OrdersPage/Record")
+    @ResponseBody
+    public List<Map<String, Object>> getRecordsById(
             @RequestParam(value = "json", required = false) String jsonParam)
             throws IOException {
         Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);

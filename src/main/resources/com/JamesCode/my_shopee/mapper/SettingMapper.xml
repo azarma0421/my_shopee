@@ -145,6 +145,7 @@
         <if test="Date_Time_E != null and Date_Time_E !=''">and NO &lt;= #{Date_Time_E}</if>
         <if test="amount != null and amount !=''">and price = #{amount}</if>
         <if test="status != null and status !=''">and status = #{status}</if>
+        <if test="userId != null and userId !=''">and UserId = #{userId}</if>
         order by
         pkno desc;
     </select>

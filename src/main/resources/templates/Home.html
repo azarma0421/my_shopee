@@ -26,6 +26,7 @@
             <input type="submit" value="TO Setting"/>
         </form>
         <form th:action="@{OrdersPage}" method="POST">
+            <input type="hidden" id="_uid" name="uid" th:value="${UserId}" />
             <input type="submit" value="Orders"/>
         </form>
 
@@ -85,10 +86,11 @@
             <span th:if="${product.R_price != product.cost}" th:text="${product.cost}" class="price" style="text-decoration: line-through" yle></span>
             <span th:if="${product.R_price != product.cost}" th:text="${product.R_price}" class="price"></span>
             <i class="bx bx-shopping-bag add-cart"></i>
-        </span>
+        </div>
     </div>
 </section>
 <!--JS-->
 <script src="js/main.js"></script>
+<script src="js/common.js"></script>
 
 </body>
