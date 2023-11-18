@@ -64,7 +64,16 @@ public class SettingServiceImpl implements SettingService {
 
         List<Map<String,Object>> result_list = new ArrayList<>();
         CreateDAO createDAO = new createDAOImpl();
-        result_list = createDAO.createDAOImpl("SettingMapper.getRecord",paraMap);
+        result_list = createDAO.createDAOImpl("OrderMapper.getRecord",paraMap);
+        return result_list;
+    }
+
+    @Override
+    public List<Map<String, Object>> get_Detail(Map<String, Object> paraMap) throws IOException {
+
+        List<Map<String,Object>> result_list = new ArrayList<>();
+        CreateDAO createDAO = new createDAOImpl();
+        result_list = createDAO.createDAOImpl("OrderMapper.getDetail",paraMap);
         return result_list;
     }
 

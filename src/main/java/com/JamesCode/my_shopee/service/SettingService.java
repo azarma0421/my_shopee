@@ -15,5 +15,7 @@ public interface SettingService {
     public List<Map<String, Object>> add_SetProduct(Map<String, Object> paramap) throws IOException;
     public List<Map<String, Object>> update_SetProduct(Map<String, Object> paramap) throws IOException;
     public List<Map<String, Object>> del_SetProduct(Map<String, Object> paramap) throws IOException;
+    public List<Map<String, Object>> get_Detail(Map<String, Object> paramap) throws IOException;
 
+    
 }

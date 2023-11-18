@@ -48,4 +48,17 @@ public class OrderController {
         System.out.println(result_list);
         return result_list;
     }
+
+    @GetMapping("/OrdersPage/Detail")
+    @ResponseBody
+    public List<Map<String, Object>> getDetail(
+            @RequestParam(value = "json", required = false) String jsonParam)
+            throws IOException {
+
+        Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);
+
+        List<Map<String, Object>> result_list = settingService.get_Detail(jsonData);
+        System.out.println(result_list);
+        return result_list;
+    }
 }

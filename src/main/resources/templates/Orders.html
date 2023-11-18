@@ -14,6 +14,26 @@
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="js/common.js"></script>
     <script src="js/order.js"></script>
+
+    <style>
+        /* Set the width of the first table to 70% */
+        #div1 {
+            width: 70%;
+            float: left; /* To align side by side */
+        }
+
+        /* Set the width of the second table to 30% */
+        #div2 {
+            width: 30%;
+            float: left; /* To align side by side */
+        }
+
+        .scrollable-div {
+            border: 1px solid #000;
+            height: 500px; /* Set a height for the div */
+            overflow: auto; /* Add scrollbar */
+        }
+    </style>
 </head>
 <body>
 
@@ -74,19 +94,34 @@
     </div>
     <!--data-->
     <form id="order_form" class="container">
-        <table id="order_data" class="table container">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">NO</th>
-                <th scope="col">Date_Time</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div id="div1" class="scrollable-div">
+            <table id="order_data" class="table container">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">NO</th>
+                    <th scope="col">Date_Time</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div  id="div2" class="scrollable-div">
+            <table id="table2" class="table container">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Num/Price</th>
+                    <th scope="col">Total price</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </form>
 </div>
 

@@ -136,9 +136,7 @@ callAPI(apiUrl, 'GET')
             }
             tbody.appendChild(trRow);
         }
-        console.log("tbody: ",tbody);
         return tbody;
-//            table.appendChild(tbody);
     }
 
 /*
@@ -155,7 +153,6 @@ callAPI(apiUrl, 'GET')
             var cells = rows[i].getElementsByTagName("td");
             for (var j = 0; j < cells.length; j++) {
                 if(j==target){
-                console.log("cells: ==");
                     var button = document.createElement("button");
                     button.id = cells[j].innerText;
                     button.innerText = btn_val;

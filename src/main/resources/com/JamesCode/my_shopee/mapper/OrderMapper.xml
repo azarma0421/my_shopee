@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    不同Mapper文件的namespace要為唯一值
+    在程式中通過[ namespace + id ]定位到要執行哪一條SQL
+ -->
+<mapper namespace="com.JamesCode.my_shopee.mapper.OrderMapper">
+    <!--
+        不同Mapper文件的namespace要為唯一值
+        在程式中通過[ namespace + id ]定位到要執行哪一條SQL
+     -->
+    <select id="getDetail" resultType="java.util.HashMap">
+        select
+        pname Name,
+        concat(
+        concat(num, ' * '),
+        price
+        ) NP,
+        num * price TP
+        from
+        records
+        where
+        NO = #{NO}
+        order by
+        pname
+    </select>
+
+    <select id="getRecord" resultType="java.util.HashMap">
+        SELECT
+        a.NO,
+        DATE_FORMAT(
+        STR_TO_DATE(a.NO, '%Y%m%d%H%i%s'),
+        '%Y-%m-%d %H:%i:%s'
+        ) DT,
+        SUM(a.num * a.price) amount,
+        b.value value
+        FROM
+        records a
+        INNER JOIN status b ON a.status = b.key
+        AND b.name = 'record_status'
+        WHERE
+        1 = 1
+        <if test="NO != null and NO !=''">and NO REGEXP #{NO}</if>
+        <if test="Date_Time_S != null and Date_Time_S !=''">and NO >= #{Date_Time_S}</if>
+        <if test="Date_Time_E != null and Date_Time_E !=''">and NO &lt;= #{Date_Time_E}</if>
+        <if test="amount != null and amount !=''">and price = #{amount}</if>
+        <if test="status != null and status !=''">and status = #{status}</if>
+        <if test="userId != null and userId !=''">and UserId = #{userId}</if>
+        GROUP BY
+        NO,
+        DT,
+        value
+        ORDER BY
+        NO DESC;
+    </select>
+</mapper>
