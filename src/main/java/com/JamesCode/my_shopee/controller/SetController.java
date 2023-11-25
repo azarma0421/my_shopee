@@ -175,6 +175,8 @@ public class SetController {
             src = src.substring(index);
             Path filePath = Paths.get(uploadDir, src);
             Files.write(filePath, file.getBytes());
+            File newfile = new File(filePath.toUri());
+            ImageResizer(newfile);
         }else{
         }
 
