@@ -13,6 +13,7 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -30,7 +31,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests()
-                .anyRequest().authenticated()
+                .requestMatchers(new AntPathRequestMatcher("/LoginPage/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/**")).authenticated()
+
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .successHandler(successHandler())

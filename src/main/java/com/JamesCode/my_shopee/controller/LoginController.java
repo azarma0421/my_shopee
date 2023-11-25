@@ -1,5 +1,7 @@
 package com.JamesCode.my_shopee.controller;
 
+import com.JamesCode.my_shopee.service.CommonFUNC;
+import com.JamesCode.my_shopee.service.LoginService;
 import com.JamesCode.my_shopee.service.ProductService;
 import com.JamesCode.my_shopee.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -7,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,10 +25,16 @@ public class LoginController {
 
     private UserService userService;
 
+    private LoginService loginService;
+
+    private CommonFUNC commonFUNC;
+
     @Autowired
-    public LoginController(ProductService productService, UserService userService){
+    public LoginController(ProductService productService, UserService userService, CommonFUNC commonFUNC, LoginService loginService){
         this.productService = productService;
         this.userService = userService;
+        this.loginService = loginService;
+        this.commonFUNC = commonFUNC;
     }
 
     @GetMapping("/LoginPage")
@@ -34,6 +45,10 @@ public class LoginController {
     @GetMapping("/")
     public String showhome(Model model, HttpSession session) throws IOException {
         String username = (String) session.getAttribute("username");
+
+        if(null == username){
+            return "fancy-login";
+        }
         String ROLE = (String) session.getAttribute("ROLE");
         model.addAttribute("username", username);
         System.out.println("[DEBUG] Login username: " + username);
@@ -59,5 +74,30 @@ public class LoginController {
         model.addAttribute("ROLE", ROLE);
         model.addAttribute("UserId", uid);
         return "Home";
+    }
+
+    @PostMapping("/LoginPage")
+    @ResponseBody
+    public String signup(
+            @RequestParam(value = "json", required = false) String jsonParam)
+            throws IOException {
+
+        Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);
+
+        String msg = loginService.sign_up(jsonData);
+        return msg;
+    }
+
+    @GetMapping("/LoginPage/PW")
+    @ResponseBody
+    public String getPW(
+            @RequestParam(value = "json", required = false) String jsonParam)
+            throws IOException {
+
+        Map<String, Object> jsonData = commonFUNC.json2Map(jsonParam);
+
+        String msg = loginService.getPW(jsonData);
+
+        return msg;
     }
 }

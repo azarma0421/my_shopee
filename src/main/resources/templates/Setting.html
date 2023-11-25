@@ -204,6 +204,7 @@
             var currentUrl = window.location.href;
             var jsonParam = JSON.stringify(param);
             var encodedJson = encodeURIComponent(jsonParam);
+            console.log("encodedJson: ",encodedJson);
             var apiUrl = currentUrl + '/Find_P?json=' + encodedJson;
 
             callAPI(apiUrl, 'GET')
