@@ -57,11 +57,11 @@ function onClickHandler(NO) {
     apiUrl = makeURL(apiUrl,jsonParam);
 
     callAPI(apiUrl, 'GET')
-            .then(data => {
-                const col = ["Name","NP","TP"];
-                data2table('table2',col,data);
-            })
-            .catch(error => {
-                console.error('[ERROR] Error in callAPI:', error);
-            });
+        .then(data => {
+            const col = ["Name","NP","TP"];
+            data2table('table2',col,data);
+        })
+        .catch(error => {
+            console.error('[ERROR] Error in callAPI:', error);
+        });
 }
